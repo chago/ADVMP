@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>buwai.android.shell</groupId>
-	<artifactId>vmp</artifactId>
+	<artifactId>advmp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -29,8 +29,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${project.build.sourceEncoding}</source>
+					<target>${project.build.sourceEncoding}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -43,6 +43,8 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>Separator</module>
+        <module>base</module>
+		<module>separator</module>
+		<module>control-centre</module>
 	</modules>
 </project>

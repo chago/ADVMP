@@ -20,6 +20,10 @@ $RECYCLE.BIN/
 # IntelliJ IDEA
 *.iml
 
+#Maven
+target
+target/*
+
 # =========================
 # Operating System Files
 # =========================
