@@ -1,7 +1,8 @@
 package buwai.android.shell.separator.config;
 
-import buwai.android.shell.base.helper.ResourceHelper;
 import buwai.android.shell.base.Common;
+import buwai.android.shell.base.TypeDescription;
+import buwai.android.shell.base.helper.ResourceHelper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -128,21 +129,25 @@ public class ConfigParse {
 
         // 解析黑名单。
         JSONArray blackList = (JSONArray) userConf.get(Config.CONF_BLACK_LIST);
-        for (int i = 0; i < blackList.size(); i++) {
-            String item = blackList.getString(i);
-            TypeDescription td = parseTypeDescription(item);
-            if (!config.blackList.contains(td)) {
-                config.blackList.add(td);
+        if (null != blackList) {
+            for (int i = 0; i < blackList.size(); i++) {
+                String item = blackList.getString(i);
+                TypeDescription td = parseTypeDescription(item);
+                if (!config.blackList.contains(td)) {
+                    config.blackList.add(td);
+                }
             }
         }
 
         // 解析白名单。
         JSONArray whiteList = (JSONArray) userConf.get(Config.CONF_WHITE_LIST);
-        for (int i = 0; i < whiteList.size(); i++) {
-            String item = whiteList.getString(i);
-            TypeDescription td = parseTypeDescription(item);
-            if (!config.whiteList.contains(td)) {
-                config.whiteList.add(td);
+        if (null != whiteList) {
+            for (int i = 0; i < whiteList.size(); i++) {
+                String item = whiteList.getString(i);
+                TypeDescription td = parseTypeDescription(item);
+                if (!config.whiteList.contains(td)) {
+                    config.whiteList.add(td);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package buwai.android.shell.base.helper;
 
 import buwai.android.shell.base.TypeDescription;
+import org.apache.log4j.Logger;
 import pxb.android.axml.*;
 
 import java.io.File;
@@ -12,8 +13,10 @@ import java.lang.reflect.Field;
  */
 public class AndroidManifestHelper {
 
+    private static final Logger log = Logger.getLogger(AndroidManifestHelper.class);
+
     public static TypeDescription findFirstClass(File manifestFile) throws IOException {
-        final String[] className = new String[0];
+        final String[] className = new String[1];
         AxmlReader reader = new AxmlReader(Util.readFile(manifestFile));
 
         final String[] packageName = new String[1];
@@ -131,6 +134,7 @@ public class AndroidManifestHelper {
         });
 
 
+        log.info("findFirstClass:" + className[0]);
         return TypeDescriptionHelper.convertByFullClassName(className[0]);
     }
 

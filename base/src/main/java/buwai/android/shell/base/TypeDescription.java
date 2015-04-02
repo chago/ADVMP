@@ -3,6 +3,8 @@ package buwai.android.shell.base;
 /**
  * 类型描述。
  * Created by buwai on 2015/4/1.
+ * &：忽略。
+ * *：通配符。
  */
 public class TypeDescription {
 

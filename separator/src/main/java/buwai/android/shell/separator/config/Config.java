@@ -1,5 +1,6 @@
 package buwai.android.shell.separator.config;
 
+import buwai.android.shell.base.TypeDescription;
 import org.jf.dexlib2.AccessFlags;
 import org.jf.dexlib2.Opcode;
 

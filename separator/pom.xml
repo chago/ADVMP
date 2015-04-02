@@ -19,6 +19,11 @@
 			<artifactId>base</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>buwai.android.shell</groupId>
+			<artifactId>ycformat</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

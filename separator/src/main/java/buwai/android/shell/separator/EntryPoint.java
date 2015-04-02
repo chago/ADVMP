@@ -1,8 +1,7 @@
 package buwai.android.shell.separator;
 
-import buwai.android.shell.base.helper.AndroidManifestHelper;
 import buwai.android.shell.base.TypeDescription;
-import buwai.android.shell.base.Utils;
+import buwai.android.shell.base.helper.AndroidManifestHelper;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
 
@@ -37,19 +36,19 @@ public class EntryPoint {
                 usage();
             }
 
-            File srcFile = null;
+            SeparatorOption opt = new SeparatorOption();
+
             if (cl.hasOption('s')) {
-                srcFile = new File(cl.getOptionValue('s'));
+                opt.apkFile = new File(cl.getOptionValue('s'));
             }
-            if (null == srcFile) {
+            if (null == opt.apkFile) {
                 usage();
             }
 
-            File manifestFile = null;
             if (cl.hasOption('m')) {
-                manifestFile = new File(cl.getOptionValue('m'));
+                opt.manifestFile = new File(cl.getOptionValue('m'));
             }
-            if (null == manifestFile) {
+            if (null == opt.manifestFile) {
                 usage();
             }
 
@@ -60,18 +59,22 @@ public class EntryPoint {
             if (null == outDir) {
                 usage();
             }
+            opt.outDexFile = new File(outDir, "classes.dex");
+            opt.outYcFile = new File(outDir, "classes.yc");
+            opt.outCPFile = new File(outDir, "yc_separator.cpp");
 
-            File configFile = null;
             if (cl.hasOption('c')) {
-                configFile = new File(cl.getOptionValue('c'));
+                opt.configFile = new File(cl.getOptionValue('c'));
             }
 
             // [TODO] separator 这里是临时放置，以后要把下面两行语句放到control-centre中。
-            TypeDescription classDesc = AndroidManifestHelper.findFirstClass(manifestFile);
-            Utils.addLoadLibrary(srcFile, classDesc);
+            TypeDescription classDesc = AndroidManifestHelper.findFirstClass(opt.manifestFile);
+            InstructionInsert01 instructionInsert01 = new InstructionInsert01(opt.apkFile, classDesc);
+            instructionInsert01.insert();
+            //Utils.addLoadLibrary(srcFile, classDesc);
 
             log.info("------ 开始抽取 ------");
-            Separator separator = new Separator(srcFile, manifestFile, outDir, configFile);
+            Separator separator = new Separator(opt);
             if (separator.run()) {
                 log.info("抽取成功。");
             } else {
