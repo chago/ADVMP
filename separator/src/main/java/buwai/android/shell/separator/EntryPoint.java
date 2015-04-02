@@ -61,7 +61,7 @@ public class EntryPoint {
             }
             opt.outDexFile = new File(outDir, "classes.dex");
             opt.outYcFile = new File(outDir, "classes.yc");
-            opt.outCPFile = new File(outDir, "yc_separator.cpp");
+            opt.outCPFile = new File(outDir, "advmp_separator.cpp");
 
             if (cl.hasOption('c')) {
                 opt.configFile = new File(cl.getOptionValue('c'));

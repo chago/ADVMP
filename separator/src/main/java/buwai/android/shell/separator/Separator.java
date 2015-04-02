@@ -30,6 +30,7 @@ public class Separator {
     private DexRewriter mDexRewriter;
     private SeparatorOption mOpt;
 
+    private List<Method> mSeparatedMethod = new ArrayList<>();
     private List<YcFormat.SeparatorData> mSeparatorData = new ArrayList<>();
 
     /**
@@ -57,20 +58,37 @@ public class Separator {
             // 将新dex输出到文件。
             DexFileFactory.writeDexFile(mOpt.outDexFile.getAbsolutePath(), newDexFile);
 
-            YcFormat ycFormat = new YcFormat();
-            ycFormat.header = new YcFormat.Header();
-            ycFormat.header.magic  =YcFormat.MAGIC;
-            ycFormat.header.methodOffset = 0;
-            ycFormat.header.separatorDataOffset = YcFormat.SIZE_HEADER;
-            ycFormat.separatorDatas = mSeparatorData;
-            YcFile ycFile = new YcFile(mOpt.outYcFile, ycFormat);
-            ycFile.write();
+            // 写Yc文件。
+            writeYcFile();
+
+            // 写C文件。
+            writeCFile();
 
             bRet = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return bRet;
+    }
+
+    /**
+     * 写Yc文件。
+     *
+     * @throws IOException
+     */
+    private void writeYcFile() throws IOException {
+        YcFormat ycFormat = new YcFormat();
+        // TODO 没有对methods字段赋值。
+        ycFormat.separatorDatas = mSeparatorData;
+        YcFile ycFile = new YcFile(mOpt.outYcFile, ycFormat);
+        ycFile.write();
+    }
+
+    /**
+     * 写C文件。
+     */
+    private void writeCFile() {
+
     }
 
     class SeparatorDexRewriter extends DexRewriter {
@@ -107,12 +125,15 @@ public class Separator {
                 @Override
                 public Method rewrite(@Nonnull Method value) {
                     if (mConfigHelper.isValid(value)) {
+                        mSeparatedMethod.add(value);
                         // 抽取代码。
                         YcFormat.SeparatorData separatorData = new YcFormat.SeparatorData();
                         separatorData.methodIndex = mSeparatorData.size();
                         separatorData.insts = MethodHelper.getInstructions((DexBackedMethod) value);
+                        separatorData.instSize = separatorData.insts.length;
                         mSeparatorData.add(separatorData);
 
+                        // 生成一个新的方法。
                         return new ImmutableMethod(value.getDefiningClass(), value.getName(), value.getParameters(), value.getReturnType(), value.getAccessFlags() | AccessFlags.NATIVE.getValue(), value.getAnnotations(), null);
                     }
 

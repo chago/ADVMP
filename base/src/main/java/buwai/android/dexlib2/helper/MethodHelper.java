@@ -52,16 +52,12 @@ public class MethodHelper {
      * @param dexBackedMethod
      * @return 返回方法中的指令。
      */
-    public static byte[] getInstructions(DexBackedMethod dexBackedMethod) {
+    public static short[] getInstructions(DexBackedMethod dexBackedMethod) {
         int codeOffset = getCodeOffset(dexBackedMethod);
         DexBackedDexFile dexFile = dexBackedMethod.getImplementation().dexFile;
 
         // 这个size指是u2数组的元素个数。
         int instructionsSize = dexFile.readSmallUint(codeOffset + CodeItem.INSTRUCTION_COUNT_OFFSET);
-        // 以4字节对齐。
-        if (1 == instructionsSize % 2) {
-            instructionsSize += 1;
-        }
 
         int instructionsStartOffset = codeOffset + CodeItem.INSTRUCTION_START_OFFSET;
         short[] insts = new short[instructionsSize];
@@ -70,13 +66,7 @@ public class MethodHelper {
             instructionsStartOffset += 2;
         }
 
-        byte[] byteInsts = new byte[instructionsSize * 2];
-        for (int i = 0, j = 0; i < instructionsSize; i++) {
-            short s = insts[i];
-            byteInsts[j++] = (byte) (s & 0xff);
-            byteInsts[j++] = (byte) ((s >> 8) & 0xff);
-        }
-        return byteInsts;
+        return insts;
     }
 
     /**
