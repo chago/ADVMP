@@ -78,20 +78,25 @@ public class YcFormat {
         public int size;
 
         /**
-         * 方法所属类。
-         * 以"Ljava/lang/System;"这样的格式保存。
+         * 方法的访问标志。
          */
-        public String definingClass;
+        public int accessFlag;
+
+        /**
+         * 方法所属类。
+         * 以"java/lang/System"这样的格式保存。
+         */
+        public StringItem definingClass;
 
         /**
          * 方法名。
          */
-        public String name;
+        public StringItem name;
 
         /**
          * 方法签名。
          */
-        public String sig;
+        public StringItem sig;
     }
 
     /**
@@ -109,6 +114,26 @@ public class YcFormat {
          * 当前结构的大小。
          */
         public int size;
+
+        /**
+         * 方法的访问标志。
+         */
+        public int accessFlag;
+
+        /**
+         * 参数个数。
+         */
+        public int paramSize;
+
+        /**
+         * 寄存器个数。
+         */
+        public int registerSize;
+
+        /**
+         * 参数的短类型描述。
+         */
+        public StringItem paramShortDesc;
 
         /**
          * 指令数组元素个数。

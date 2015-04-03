@@ -8,9 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="buwai.android.shell.advmptest.MainActivity" >
 
-    <TextView
+    <Button
+        android:id="@+id/btnTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="测试" />
 
 </RelativeLayout>

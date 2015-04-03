@@ -2,8 +2,6 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-DEVFLAG := _static
-
 LOCAL_MODULE    := advmpc
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../minizip
@@ -16,7 +14,10 @@ LOCAL_SRC_FILES := ioapi.c \
 				   InterpC.cpp \
 				   io.cpp \
 				   Utils.cpp \
-				   YcFile.cpp \
+				   YcFile.cpp 
+
+LOCAL_SRC_FILES += DexOpcodes.cpp \
+				   Exception.cpp
 
 LOCAL_LDLIBS := -llog -lz
 

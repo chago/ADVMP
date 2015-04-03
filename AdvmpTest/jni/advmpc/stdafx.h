@@ -6,5 +6,6 @@
 #include <string.h>
 #include <stddef.h>
 #include <errno.h>
+#include <stdarg.h>
 
 #include "log.h"

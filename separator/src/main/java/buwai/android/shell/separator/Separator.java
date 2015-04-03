@@ -1,6 +1,7 @@
 package buwai.android.shell.separator;
 
 import buwai.android.dexlib2.helper.MethodHelper;
+import buwai.android.shell.advmpformat.StringItem;
 import buwai.android.shell.advmpformat.YcFile;
 import buwai.android.shell.advmpformat.YcFormat;
 import buwai.android.shell.base.Common;
@@ -129,9 +130,17 @@ public class Separator {
                         // 抽取代码。
                         YcFormat.SeparatorData separatorData = new YcFormat.SeparatorData();
                         separatorData.methodIndex = mSeparatorData.size();
+                        separatorData.accessFlag = value.getAccessFlags();
+                        separatorData.paramSize = value.getParameters().size();
+                        separatorData.registerSize = value.getImplementation().getRegisterCount();
+
+                        separatorData.paramShortDesc = new StringItem();
+                        separatorData.paramShortDesc.str = MethodHelper.genParamsShortDesc(value).getBytes();
+                        separatorData.paramShortDesc.size = separatorData.paramShortDesc.str.length;
+
                         separatorData.insts = MethodHelper.getInstructions((DexBackedMethod) value);
                         separatorData.instSize = separatorData.insts.length;
-                        separatorData.size = 4 + 4 + separatorData.instSize + 4;
+                        separatorData.size = 4 + 4 + 4 + 4 + 4 + separatorData.paramShortDesc.size + 4 + (separatorData.instSize * 2) + 4;
                         mSeparatorData.add(separatorData);
 
                         // 生成一个新的方法。

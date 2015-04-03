@@ -108,4 +108,24 @@ public class MethodHelper {
         return sb.toString();
     }
 
+    /**
+     * 生成方法参数的短类型。
+     * @param mr
+     * @return 返回方法参数的短类型。
+     */
+    public static String genParamsShortDesc(MethodReference mr) {
+        List<? extends CharSequence> params = mr.getParameterTypes();
+        StringBuilder sb = new StringBuilder();
+        int length = params.size();
+        for (int i = 0; i < length; i++) {
+            char chType = params.get(i).charAt(0);
+            if ('[' == chType) {
+                sb.append('L');
+            } else {
+                sb.append(chType);
+            }
+        }
+        return sb.toString();
+    }
+
 }

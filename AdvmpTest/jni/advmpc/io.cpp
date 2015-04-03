@@ -116,11 +116,13 @@ uLong ZipReader::GetFileSizeInZip(const char *fileName) {
 // 读取某个文件。
 bool ZipReader::ReadBytes(const char *fileName, unsigned char *buffer, size_t len) {
     if (UNZ_OK != unzLocateFile(mUnzFile, fileName, false)) {
+        MY_LOG_WARNING("定位文件失败。");
         return false;
     }
     unz_file_info info = { 0 };
 
     if (UNZ_OK != unzGetCurrentFileInfo(mUnzFile, &info, NULL, 0, NULL, 0, NULL, 0)) {
+        MY_LOG_WARNING("获得文件信息失败。");
         return false;
     }
 
@@ -129,14 +131,18 @@ bool ZipReader::ReadBytes(const char *fileName, unsigned char *buffer, size_t le
         return false;
     }
 
+    // 
     if (UNZ_OK != unzOpenCurrentFile(mUnzFile)) {
+        MY_LOG_WARNING("打开当前文件失败。");
         return false;
     }
 
-    if (UNZ_OK == unzReadCurrentFile(mUnzFile, buffer, len)) {
-        return true;
-    } else {
+    int result;
+    if ( ((result = unzReadCurrentFile(mUnzFile, buffer, len)) < 0 ) || (result != len) ) {
+        MY_LOG_WARNING("读取当前文件失败。result=%d.", result);
         return false;
+    } else {
+        return true;
     }
 }
 

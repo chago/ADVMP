@@ -122,6 +122,11 @@ public class YcFile {
         for (YcFormat.SeparatorData s : separatorDatas) {
             os.write(BitConverter.getBytes(s.methodIndex));
             os.write(BitConverter.getBytes(s.size));
+            os.write(BitConverter.getBytes(s.accessFlag));
+            os.write(BitConverter.getBytes(s.paramSize));
+            os.write(BitConverter.getBytes(s.registerSize));
+            os.write(BitConverter.getBytes(s.paramShortDesc.size));
+            os.write(s.paramShortDesc.str);
             os.write(BitConverter.getBytes(s.instSize));
             os.write(BitConverter.getBytes(s.insts));
             // TODO ycformat 这里先不处理try...catch和调试信息。
