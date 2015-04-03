@@ -4,8 +4,6 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := advmpc
 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../minizip
-
 LOCAL_SRC_FILES := ioapi.c \
 				   unzip.c \
 				   Globals.cpp \

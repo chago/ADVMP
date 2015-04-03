@@ -24,7 +24,7 @@ public class YcFile {
      * 写出yc文件。
      */
     public void write() throws IOException {
-        List<Byte> methods = writeMethod();
+        //List<Byte> methods = writeMethod();
         List<Byte> separatorDatas = writeSeparatorData();
 
 
@@ -44,14 +44,14 @@ public class YcFile {
         }
 
         mFormat.header.separatorDataSize = mFormat.separatorDatas.size();
-        mFormat.header.separatorDataOffset = YcFormat.SIZE_HEADER + methods.size();
+        mFormat.header.separatorDataOffset = YcFormat.SIZE_HEADER;
 
         // 最后再生成文件头。
         List<Byte> header = writeHeader();
 
         List<Byte> bytes = new ArrayList<>();
         bytes.addAll(header);
-        bytes.addAll(methods);
+        //bytes.addAll(methods);
         bytes.addAll(separatorDatas);
 
         byte[] arrBytes = new byte[bytes.size()];
@@ -92,25 +92,25 @@ public class YcFile {
      * 向文件写入YcFormat.Method。
      * @throws IOException
      */
-    private List<Byte> writeMethod() throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        List<YcFormat.AdvmpMethod> methods = mFormat.methods;
-        if (null != methods) {
-            for (YcFormat.AdvmpMethod m : methods) {
-                os.write(BitConverter.getBytes(m.methodIndex));
-                os.write(BitConverter.getBytes(m.size));
-                os.write(m.definingClass.getBytes());
-                os.write(m.name.getBytes());
-                os.write(m.sig.getBytes());
-            }
-        }
-
-        List<Byte> bytes = new ArrayList<>();
-        for (byte b : os.toByteArray()) {
-            bytes.add(b);
-        }
-        return bytes;
-    }
+//    private List<Byte> writeMethod() throws IOException {
+//        ByteArrayOutputStream os = new ByteArrayOutputStream();
+//        List<YcFormat.AdvmpMethod> methods = mFormat.methods;
+//        if (null != methods) {
+//            for (YcFormat.AdvmpMethod m : methods) {
+//                os.write(BitConverter.getBytes(m.methodIndex));
+//                os.write(BitConverter.getBytes(m.size));
+//                os.write(m.definingClass..getBytes());
+//                os.write(m.name.getBytes());
+//                os.write(m.sig.getBytes());
+//            }
+//        }
+//
+//        List<Byte> bytes = new ArrayList<>();
+//        for (byte b : os.toByteArray()) {
+//            bytes.add(b);
+//        }
+//        return bytes;
+//    }
 
     /**
      * 写SeparatorData。

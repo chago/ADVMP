@@ -8,19 +8,14 @@ import java.io.File;
 public class SeparatorOption {
 
     /**
-     * apk文件。
+     * dex文件。
      */
-    public File apkFile;
+    public File dexFile;
 
     /**
      * 配置文件。
      */
     public File configFile;
-
-    /**
-     * AndroidManifest.xml文件。
-     */
-    public File manifestFile;
 
     /**
      * 输出的dex文件。

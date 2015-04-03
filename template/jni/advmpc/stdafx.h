@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <errno.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 #include "Common.h"
 

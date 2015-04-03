@@ -1,13 +1,18 @@
 package buwai.android.shell.controlcentre;
 
 import org.apache.commons.cli.*;
+import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Created by buwai on 2015/4/1.
  */
 public class EntryPoint {
+
+    private final static Logger log = Logger.getLogger(EntryPoint.class);
 
     private static Options options;
 
@@ -19,6 +24,7 @@ public class EntryPoint {
     }
 
     public static void main(String[] args) {
+        log.info("------ 进入控制中心 ------");
         try {
             BasicParser parser = new BasicParser();
             CommandLine cl = null;
@@ -28,25 +34,37 @@ public class EntryPoint {
                 usage();
             }
 
-            File srcFile = null;
+            ControlCentreOption opt = new ControlCentreOption();
             if (cl.hasOption('s')) {
-                srcFile = new File(cl.getOptionValue('s'));
+                opt.apkFile = new File(cl.getOptionValue('s'));
             }
-            if (null == srcFile) {
+            if (null == opt.apkFile) {
                 usage();
             }
 
-            File outDir = null;
             if (cl.hasOption('o')) {
-                outDir = new File(cl.getOptionValue('o'));
+                opt.outDir = new File(cl.getOptionValue('o'));
             }
-            if (null == outDir) {
+            if (null == opt.outDir) {
                 usage();
+            }
+
+            // 创建工作目录。
+            opt.workspace = Files.createTempDirectory(opt.outDir.toPath(), "advmp").toFile();
+            log.info("workspack:" + opt.workspace);
+
+            ControlCentre controlCentre = new ControlCentre(opt);
+            log.info("开始加固。");
+            if (controlCentre.shell()) {
+                //log.info
             }
 
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        log.info("------ 离开控制中心 ------");
     }
 
     private static void usage() {

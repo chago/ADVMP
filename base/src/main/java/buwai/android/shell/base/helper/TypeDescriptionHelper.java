@@ -198,6 +198,9 @@ public class TypeDescriptionHelper {
      * @return true: 包含。false: 不包含。
      */
     public static boolean isMatchMethodInWhiteList(List<TypeDescription> list, TypeDescription typeDescription) {
+        if (0 == list.size()) {
+            return true;
+        }
         for (TypeDescription td : list) {
             if (null == td.methodName) {
                 return true;
@@ -217,6 +220,9 @@ public class TypeDescriptionHelper {
     }
 
     public static boolean isMatchMethodInBlackList(List<TypeDescription> list, TypeDescription typeDescription) {
+        if (0 == list.size()) {
+            return false;
+        }
         for (TypeDescription td : list) {
             if (null == td.methodName) {
                 return false;

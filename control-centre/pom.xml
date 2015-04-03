@@ -19,9 +19,15 @@
             <artifactId>base</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>buwai.android.shell</groupId>
+            <artifactId>separator</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>buwaishell</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

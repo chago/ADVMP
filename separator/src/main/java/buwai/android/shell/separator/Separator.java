@@ -39,11 +39,15 @@ public class Separator {
      */
     public Separator(SeparatorOption opt) throws IOException {
         mOpt = opt;
-        mDexFile = DexFileFactory.loadDexFile(opt.apkFile, Common.API); // 加载dex。
+        mDexFile = DexFileFactory.loadDexFile(opt.dexFile, Common.API); // 加载dex。
         mDexRewriter = new SeparatorDexRewriter(new SeparatorRewriterModule());
 
         // 解析配置文件。
         mConfigHelper = new ConfigHelper(new ConfigParse(opt.configFile).parse());
+
+        if (!mOpt.outDexFile.exists()) {
+            mOpt.outDexFile.getParentFile().mkdirs();
+        }
     }
 
     /**
@@ -88,8 +92,9 @@ public class Separator {
     /**
      * 写C文件。
      */
-    private void writeCFile() {
-
+    private void writeCFile() throws IOException {
+        SeparatorCWriter separatorCWriter = new SeparatorCWriter(mOpt.outCPFile, mSeparatedMethod);
+        separatorCWriter.write();
     }
 
     class SeparatorDexRewriter extends DexRewriter {

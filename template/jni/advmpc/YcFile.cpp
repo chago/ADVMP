@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "log.h"
 #include "BitConvert.h"
 #include "io.h"
 #include "Globals.h"

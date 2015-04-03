@@ -46,6 +46,16 @@ public class ConfigHelper {
             return false;
         }
 
+        // 不支持<init>
+        if ("<init>".equals(methodTypeDesc.methodName)) {
+            return false;
+        }
+
+        // TODO 这里现在是写死的！
+        if (!"separatorTest".equals(method.getName())) {
+            return false;
+        }
+
         // 先判断黑名单。
         if (TypeDescriptionHelper.isMatchMethodInBlackList(mConfig.blackList, methodTypeDesc)) {
             return false;

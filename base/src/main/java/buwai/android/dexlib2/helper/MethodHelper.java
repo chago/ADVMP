@@ -21,6 +21,9 @@ import java.util.List;
  */
 public class MethodHelper {
 
+    public static final String[] paramNames = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+            "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+
     /**
      * 在起始位置插入指令。
      * @param method 方法对象。
@@ -126,6 +129,81 @@ public class MethodHelper {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 生成在native中的类型。
+     * @param mr
+     * @return
+     */
+    public static String genTypeInNative (MethodReference mr) {
+        String type = mr.getReturnType();
+        return genTypeInNative(type);
+    }
+
+    /**
+     * 生成在native中的类型。
+     * @param type
+     * @return
+     */
+    public static String genTypeInNative (CharSequence type) {
+        char cType = type.charAt(0);
+        switch (cType) {
+            case 'V':
+                return "void";
+            case 'Z':
+                return "jboolean";
+            case 'B':
+                return "jbyte";
+            case 'S':
+                return "jshort";
+            case 'C':
+                return "jchar";
+            case 'I':
+                return "jint";
+            case 'J':
+                return "jlong";
+            case 'F':
+                return "jfloat";
+            case 'D':
+                return "jdouble";
+            case 'L':
+                return "jobject";
+            case '[':
+                return "jobject";
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * 生成JNI方法参数列表。
+     *
+     * @param mr
+     * @return 返回方法参数列表。
+     */
+    public static String genParamTypeListInNative(MethodReference mr) {
+        List<? extends CharSequence> params = mr.getParameterTypes();
+        StringBuilder paramsList = new StringBuilder();
+        paramsList.append("JNIEnv *env, jobject thiz");
+        int length = params.size();
+
+        for (int i = 0; i < length; i++) {
+            paramsList.append(", ");
+            paramsList.append(genTypeInNative(mr));
+            paramsList.append(" ");
+            paramsList.append(paramNames[i]);
+        }
+        return paramsList.toString();
+    }
+
+    /**
+     * 生成JNINativeMethod结构的数据。
+     * @param method
+     * @return
+     */
+    public static String genJNINativeMethod(Method method) {
+        return String.format("{ \"%s\", \"%s\", (void*)%s }, ", method.getName(), genMethodSig(method), method.getName());
     }
 
 }

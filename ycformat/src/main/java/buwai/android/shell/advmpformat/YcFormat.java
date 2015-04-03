@@ -61,6 +61,7 @@ public class YcFormat {
     }
 
     /**
+     * TODO 这个结构要被抛弃。
      * 这个类中的字段对应dex文件中相应方法的信息。
      * 这些信息保证了在advmp中invoke方法时，可以
      * 通过jni函数找到该方法。
@@ -100,6 +101,7 @@ public class YcFormat {
     }
 
     /**
+     * TODO 这个结构要被缩小。
      * 抽离器数据。
      */
     public static class SeparatorData {

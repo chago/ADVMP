@@ -1,7 +1,5 @@
 package buwai.android.shell.separator;
 
-import buwai.android.shell.base.TypeDescription;
-import buwai.android.shell.base.helper.AndroidManifestHelper;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
 
@@ -21,7 +19,6 @@ public class EntryPoint {
         options = new Options();
         options.addOption("h", false, "使用帮助");
         options.addOption("s", true, "dex文件路径");
-        options.addOption("m", true, "AndroidManifest.xml文件路径");
         options.addOption("o", true, "输出目录");
         options.addOption("c", true, "配置文件");
     }
@@ -39,16 +36,9 @@ public class EntryPoint {
             SeparatorOption opt = new SeparatorOption();
 
             if (cl.hasOption('s')) {
-                opt.apkFile = new File(cl.getOptionValue('s'));
+                opt.dexFile = new File(cl.getOptionValue('s'));
             }
-            if (null == opt.apkFile) {
-                usage();
-            }
-
-            if (cl.hasOption('m')) {
-                opt.manifestFile = new File(cl.getOptionValue('m'));
-            }
-            if (null == opt.manifestFile) {
+            if (null == opt.dexFile) {
                 usage();
             }
 
@@ -67,10 +57,6 @@ public class EntryPoint {
                 opt.configFile = new File(cl.getOptionValue('c'));
             }
 
-            // [TODO] separator 这里是临时放置，以后要把下面两行语句放到control-centre中。
-            TypeDescription classDesc = AndroidManifestHelper.findFirstClass(opt.manifestFile);
-            InstructionInsert01 instructionInsert01 = new InstructionInsert01(opt.apkFile, classDesc);
-            instructionInsert01.insert();
             //Utils.addLoadLibrary(srcFile, classDesc);
 
             log.info("------ 开始抽取 ------");
@@ -93,7 +79,7 @@ public class EntryPoint {
      */
     private static void usage() {
         HelpFormatter help = new HelpFormatter();
-        help.printHelp("-s <dex文件路径> -m <AndroidManifest.xml文件路径> -o <输出目录> [-c <配置文件路径>]", options);
+        help.printHelp("-s <dex文件路径> -o <输出目录> [-c <配置文件路径>]", options);
         System.exit(-1);
     }
 
