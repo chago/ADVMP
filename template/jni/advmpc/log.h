@@ -1,33 +1,33 @@
-﻿#pragma once
+#pragma once
 
 #include <android/log.h>
 
 /**
- * 日志框架。
- * 用途：输入日志。
+ * ��־��ܡ�
+ * ��;��������־��
  */
 
 /*
- 用法：
-# 定义日志标签。
+ �÷���
+# ������־��ǩ��
 MY_LOG_TAG := \"hello-jni\"
 
-# 根据构建类型定义默认日志等级。
+# ���ݹ������Ͷ���Ĭ����־�ȼ���
 ifeq ($(APP_OPTIM),release)
 MY_LOG_LEVEL := MY_LOG_LEVEL_ERROR
 else
 MY_LOG_LEVEL := MY_LOG_LEVEL_VERBOSE
 endif
 
-# 追加编译标识。
+# ׷�ӱ����ʶ��
 LOCAL_CFLAGS += -DMY_LOG_TAG=$(MY_LOG_TAG)
 LOCAL_CFLAGS += -DMY_LOG_LEVEL=$(MY_LOG_LEVEL)
 
-# 动态链接日志库。
+# ��̬������־�⡣
 LOCAL_LDLIBS += -llog
 
-注意：
-如果native_log.h编译进了静态库，那么应该在包含这个静态库的模块中定义宏。
+ע�⣺
+���native_log.h������˾�̬�⣬��ôӦ���ڰ��������̬���ģ���ж���ꡣ
  */
 
 #define MY_LOG_LEVEL_VERBOSE 1
@@ -49,7 +49,7 @@ LOCAL_LDLIBS += -llog
 
 #define MY_LOG_NOOP (void) 0
 
-// 是否已详细格式输出？
+// �Ƿ�����ϸ��ʽ�����
 #ifdef MY_LOG_DETAIL
 # define MY_LOG_PRINT(level,fmt,...) \
  __android_log_print(level, MY_LOG_TAG, "{%s:%u} %s: [" fmt "]", \

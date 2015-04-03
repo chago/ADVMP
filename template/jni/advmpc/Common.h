@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 #include <stdint.h>
 
@@ -12,7 +12,7 @@ typedef int32_t             s4;
 typedef int64_t             s8;
 
 /**
- * è®¡ç®—æ•°ç»„å…ƒç´ ä¸ªæ•°ã€‚åªèƒ½ç”¨äºæ•°ç»„ï¼Œç»ä¸èƒ½ç”¨äºæŒ‡é’ˆã€‚
+ * ¼ÆËãÊı×éÔªËØ¸öÊı¡£Ö»ÄÜÓÃÓÚÊı×é£¬¾ø²»ÄÜÓÃÓÚÖ¸Õë¡£
  */
 #define array_size(arr) (sizeof(arr)/sizeof((arr)[0]))
 

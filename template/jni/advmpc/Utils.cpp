@@ -1,7 +1,7 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "Utils.h"
 
-// èŽ·å¾—APPæ–‡ä»¶è·¯å¾„ã€‚
+// »ñµÃAPPÎÄ¼þÂ·¾¶¡£
 char* GetAppPath(JNIEnv* env) {
     jclass cActivityThread = env->FindClass("android/app/ActivityThread");
     jmethodID mActivityThread = env->GetStaticMethodID(cActivityThread, "currentActivityThread", "()Landroid/app/ActivityThread;");

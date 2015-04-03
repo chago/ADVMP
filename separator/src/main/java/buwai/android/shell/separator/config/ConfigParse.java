@@ -64,6 +64,7 @@ public class ConfigParse {
     private void parseSystemProperty(Config config) throws IOException {
         // 先读取系统的配置属性。
         String systemProperty = ResourceHelper.getResourceTxt(this.getClass(), Config.CONF_FILE_SYSTEM_PROPERTY);
+        //log.info("systemProperty:" + systemProperty);
         Map<String, Object> sysConf = JSON.parseObject(systemProperty, new TypeReference<Map<String, Object>>() {
         });
         // 解析系统配置文件中的黑名单。

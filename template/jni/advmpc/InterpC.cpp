@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "DexOpcodes.h"
 #include "Exception.h"
 #include "InterpC.h"
@@ -16,9 +16,9 @@ static const char kSpacing[] = "            ";
 //////////////////////////////////////////////////////////////////////////
 
 /**
- * è·å¾—å‚æ•°å¯„å­˜å™¨ä¸ªæ•°ã€‚
- * @param[in] separatorData Separatoræ•°æ®ã€‚
- * @return è¿”å›å‚æ•°å¯„å­˜å™¨ä¸ªæ•°ã€‚
+ * »ñµÃ²ÎÊı¼Ä´æÆ÷¸öÊı¡£
+ * @param[in] separatorData SeparatorÊı¾İ¡£
+ * @return ·µ»Ø²ÎÊı¼Ä´æÆ÷¸öÊı¡£
  */
 static size_t getParamRegCount(const SeparatorData* separatorData) {
     int count = 0;
@@ -40,7 +40,7 @@ static size_t getParamRegCount(const SeparatorData* separatorData) {
             count += 2;
             break;
         default:
-            MY_LOG_ERROR("æ— æ•ˆçš„çŸ­ç±»å‹ï¼");
+            MY_LOG_ERROR("ÎŞĞ§µÄ¶ÌÀàĞÍ£¡");
             break;
         }
     }
@@ -48,19 +48,19 @@ static size_t getParamRegCount(const SeparatorData* separatorData) {
 }
 
 /**
- * æ˜¯å¦æ˜¯é™æ€æ–¹æ³•ã€‚
- * @param[in] separatorData Separatoræ•°æ®ã€‚
- * @return trueï¼šæ˜¯é™æ€æ–¹æ³•ã€‚falseï¼šä¸æ˜¯é™æ€æ–¹æ³•ã€‚
+ * ÊÇ·ñÊÇ¾²Ì¬·½·¨¡£
+ * @param[in] separatorData SeparatorÊı¾İ¡£
+ * @return true£ºÊÇ¾²Ì¬·½·¨¡£false£º²»ÊÇ¾²Ì¬·½·¨¡£
  */
 static inline bool isStaticMethod(const SeparatorData* separatorData) {
     return separatorData->accessFlag & ACC_STATIC == 0 ? false : true;
 }
 
 /**
- * è§£æå¯å˜å‚æ•°ï¼Œè·å¾—å‚æ•°æ•°ç»„ã€‚
+ * ½âÎö¿É±ä²ÎÊı£¬»ñµÃ²ÎÊıÊı×é¡£
  * @param[in] 
  * @param[in] 
- * @return è¿”å›å‚æ•°æ•°ç»„ã€‚è¿™ä¸ªæ•°ç»„ä½¿ç”¨å®Œåéœ€è¦é‡Šæ”¾å†…å­˜ã€‚
+ * @return ·µ»Ø²ÎÊıÊı×é¡£Õâ¸öÊı×éÊ¹ÓÃÍêºóĞèÒªÊÍ·ÅÄÚ´æ¡£
  */
 static jvalue* getParams(const SeparatorData* separatorData, va_list args) {
     jvalue* params = new jvalue[separatorData->paramSize];
@@ -106,7 +106,7 @@ static jvalue* getParams(const SeparatorData* separatorData, va_list args) {
             params[i].l = va_arg(args, jarray);
             break;
         default:
-            MY_LOG_WARNING("æ— æ•ˆçš„çŸ­ç±»å‹ã€‚");
+            MY_LOG_WARNING("ÎŞĞ§µÄ¶ÌÀàĞÍ¡£");
             break;
         }
     }
@@ -323,7 +323,7 @@ static inline void putDoubleToArray(u4* ptr, int idx, double dval)
  *
  * Assumes existence of "u4* fp" and "const u2* pc".
  */
-// TODO è¿™é‡Œè¿™é‡Œä¸æ”¯æŒã€‚
+// TODO ÕâÀïÕâÀï²»Ö§³Ö¡£
 #define EXPORT_PC()         /*(SAVEAREA_FROM_FP(fp)->xtra.currentPc = pc)*/
 
 /*
@@ -974,26 +974,26 @@ static inline bool checkForNullExportPC(JNIEnv* env, Object* obj, u4* fp, const 
 //////////////////////////////////////////////////////////////////////////
 
 jvalue BWdvmInterpretPortable(const SeparatorData* separatorData, JNIEnv* env, jobject thiz, ...) {
-    jvalue* params = NULL; // å‚æ•°æ•°ç»„ã€‚
-    jvalue retval;  // è¿”å›å€¼ã€‚
+    jvalue* params = NULL; // ²ÎÊıÊı×é¡£
+    jvalue retval;  // ·µ»ØÖµ¡£
 
-    const u2* pc;   // ç¨‹åºè®¡æ•°å™¨ã€‚
-    u4 fp[65535];   // å¯„å­˜å™¨æ•°ç»„ã€‚
-    u2 inst;        // å½“å‰æŒ‡ä»¤ã€‚
+    const u2* pc;   // ³ÌĞò¼ÆÊıÆ÷¡£
+    u4 fp[65535];   // ¼Ä´æÆ÷Êı×é¡£
+    u2 inst;        // µ±Ç°Ö¸Áî¡£
     u2 vsrc1, vsrc2, vdst;      // usually used for register indexes
 
     unsigned int startIndex;
 
-    // å¤„ç†å‚æ•°ã€‚
+    // ´¦Àí²ÎÊı¡£
     va_list args;
     va_start(args, thiz); 
     params = getParams(separatorData, args);
     va_end(args);
 
-    // è·å¾—å‚æ•°å¯„å­˜å™¨ä¸ªæ•°ã€‚    
+    // »ñµÃ²ÎÊı¼Ä´æÆ÷¸öÊı¡£    
     size_t paramRegCount = getParamRegCount(separatorData);
 
-    // è®¾ç½®å‚æ•°å¯„å­˜å™¨çš„å€¼ã€‚
+    // ÉèÖÃ²ÎÊı¼Ä´æÆ÷µÄÖµ¡£
     if (isStaticMethod(separatorData)) {
         startIndex = separatorData->registerSize - separatorData->paramSize;
     } else {
@@ -1014,7 +1014,7 @@ jvalue BWdvmInterpretPortable(const SeparatorData* separatorData, JNIEnv* env, j
     /* static computed goto table */
     DEFINE_GOTO_TABLE(handlerTable);
 
-    // æŠ“å–ç¬¬ä¸€æ¡æŒ‡ä»¤ã€‚
+    // ×¥È¡µÚÒ»ÌõÖ¸Áî¡£
     FINISH(0);
 
 /*--- start of opcodes ---*/
@@ -1158,7 +1158,7 @@ HANDLE_OPCODE(OP_MOVE_RESULT_OBJECT /*vAA*/)
 OP_END
 
 
-// TODO å¼‚å¸¸è¿˜ä¸æ”¯æŒã€‚
+// TODO Òì³£»¹²»Ö§³Ö¡£
 /* File: c/OP_MOVE_EXCEPTION.cpp */
 HANDLE_OPCODE(OP_MOVE_EXCEPTION /*vAA*/)
     vdst = INST_AA(inst);
@@ -1594,7 +1594,7 @@ HANDLE_OPCODE(OP_SGET_OBJECT_VOLATILE)
 HANDLE_OPCODE(OP_SPUT_OBJECT_VOLATILE)
 HANDLE_OPCODE(OP_UNUSED_FF)
 
-// TODO å¼‚å¸¸ç°åœ¨ä¸æ”¯æŒã€‚
+// TODO Òì³£ÏÖÔÚ²»Ö§³Ö¡£
     /*
      * Jump here when the code throws an exception.
      *

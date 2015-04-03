@@ -1,7 +1,7 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "BitConvert.h"
 
-// å°†å­—èŠ‚æ•°ç»„è½¬æ¢ä¸ºå­—ç¬¦ä¸²ã€‚
+// ½«×Ö½ÚÊı×é×ª»»Îª×Ö·û´®¡£
 char* ToString(unsigned char bytes[], size_t size) {
     char* str = (char*) calloc (size + 1, sizeof(char));
     if (NULL == str) {
@@ -13,7 +13,7 @@ char* ToString(unsigned char bytes[], size_t size) {
     return str;
 }
 
-// å°†å­—èŠ‚æ•°ç»„è½¬æ¢ä¸ºæ— ç¬¦å·æ•´å½¢ã€‚
+// ½«×Ö½ÚÊı×é×ª»»ÎªÎŞ·ûºÅÕûĞÎ¡£
 unsigned int ToUInt(unsigned char bytes[], size_t size) {
     unsigned int ret = 0;
     for (int i = 0, j = 0; (i < size) && (j < 4); i++, j++) {
@@ -22,7 +22,7 @@ unsigned int ToUInt(unsigned char bytes[], size_t size) {
     return ret;
 }
 
-// å°†å­—èŠ‚æ•°ç»„è½¬æ¢ä¸ºæ— ç¬¦å·æ•´å½¢ã€‚
+// ½«×Ö½ÚÊı×é×ª»»ÎªÎŞ·ûºÅÕûĞÎ¡£
 unsigned int ToUInt(unsigned char bytes[], size_t size, unsigned int start) {
     unsigned int ret = 0;
     for (int i = start, j = 0; (i < size) && (j < 4); i++, j++) {

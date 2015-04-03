@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 #include <stdio.h>
 #include "unzip.h"
@@ -7,44 +7,44 @@
 
 typedef struct _StringItem {
     /**
-     * å­—ç¬¦ä¸²ä¸­å­—ç¬¦ä¸ªæ•°ã€‚
+     * ×Ö·û´®ÖĞ×Ö·û¸öÊı¡£
      */
     unsigned int size;
 
     /**
-     * å­—ç¬¦æ•°ç»„ã€‚
+     * ×Ö·ûÊı×é¡£
      */
     unsigned char* str;
 } StringItem;
 
 typedef struct _YcHeader {
     /**
-     * é­”æœ¯å­—ã€‚
+     * Ä§Êõ×Ö¡£
      */
     const char* magic;
 
     /**
-     * æ–‡ä»¶å¤´é•¿åº¦ã€‚
+     * ÎÄ¼şÍ·³¤¶È¡£
      */
     unsigned int size;
 
     /**
-     * Methodç»“æ„çš„ä¸ªæ•°ã€‚
+     * Method½á¹¹µÄ¸öÊı¡£
      */
     unsigned int methodSize;
 
     /**
-     * Methodæ•°æ®è·ç¦»æ–‡ä»¶èµ·å§‹çš„åç§»ã€‚
+     * MethodÊı¾İ¾àÀëÎÄ¼şÆğÊ¼µÄÆ«ÒÆ¡£
      */
     unsigned int methodOffset;
 
     /**
-     * SeparatorDataç»“æ„çš„ä¸ªæ•°ã€‚
+     * SeparatorData½á¹¹µÄ¸öÊı¡£
      */
     unsigned int separatorDataSize;
 
     /**
-     * SeparatorDataæ•°æ®è·ç¦»æ–‡ä»¶èµ·å§‹çš„åç§»ã€‚
+     * SeparatorDataÊı¾İ¾àÀëÎÄ¼şÆğÊ¼µÄÆ«ÒÆ¡£
      */
     unsigned int separatorDataOffset;
 } YcHeader;
@@ -52,30 +52,30 @@ typedef struct _YcHeader {
 typedef struct _AdvmpMethod {
 
     /**
-     * æ–¹æ³•åœ¨method_id_itemä¸­çš„ç´¢å¼•ã€‚
+     * ·½·¨ÔÚmethod_id_itemÖĞµÄË÷Òı¡£
      */
     int methodIndex;
 
     unsigned int size;
 
     /**
-     * æ–¹æ³•çš„è®¿é—®æ ‡å¿—ã€‚
+     * ·½·¨µÄ·ÃÎÊ±êÖ¾¡£
      */
     unsigned int accessFlag;
 
     /**
-     * æ–¹æ³•æ‰€å±ç±»ã€‚
-     * ä»¥"Ljava/lang/System;"è¿™æ ·çš„æ ¼å¼ä¿å­˜ã€‚
+     * ·½·¨ËùÊôÀà¡£
+     * ÒÔ"Ljava/lang/System;"ÕâÑùµÄ¸ñÊ½±£´æ¡£
      */
     //public String definingClass;
 
     /**
-     * æ–¹æ³•åã€‚
+     * ·½·¨Ãû¡£
      */
     //public String name;
 
     /**
-     * æ–¹æ³•ç­¾åã€‚
+     * ·½·¨Ç©Ãû¡£
      */
     //public String sig;
 } AdvmpMethod;
@@ -83,53 +83,53 @@ typedef struct _AdvmpMethod {
 typedef struct _SeparatorData {
 
     /**
-     * è¿™ä¸ªç´¢å¼•è¡¨ç¤ºå½“å‰SeparatorDataç»“æ„åœ¨
-     * SeparatorDataç»“æ„æ•°ç»„ä¸­çš„ç´¢å¼•ã€‚
+     * Õâ¸öË÷Òı±íÊ¾µ±Ç°SeparatorData½á¹¹ÔÚ
+     * SeparatorData½á¹¹Êı×éÖĞµÄË÷Òı¡£
      */
     unsigned int methodIndex;
 
     /**
-     * å½“å‰ç»“æ„çš„å¤§å°ã€‚
+     * µ±Ç°½á¹¹µÄ´óĞ¡¡£
      */
     unsigned int size;
 
     /**
-     * æ–¹æ³•çš„è®¿é—®æ ‡å¿—ã€‚
+     * ·½·¨µÄ·ÃÎÊ±êÖ¾¡£
      */
     unsigned int accessFlag;
 
     /**
-     * å‚æ•°ä¸ªæ•°ã€‚
+     * ²ÎÊı¸öÊı¡£
      */
     unsigned int paramSize;
 
     /**
-     * å¯„å­˜å™¨ä¸ªæ•°ã€‚
+     * ¼Ä´æÆ÷¸öÊı¡£
      */
     unsigned int registerSize;
 
     /**
-     * å‚æ•°çš„çŸ­ç±»å‹æè¿°ã€‚
+     * ²ÎÊıµÄ¶ÌÀàĞÍÃèÊö¡£
      */
     StringItem paramShortDesc;
 
     /**
-     * æŒ‡ä»¤æ•°ç»„å…ƒç´ ä¸ªæ•°ã€‚
+     * Ö¸ÁîÊı×éÔªËØ¸öÊı¡£
      */
     unsigned int instSize;
 
     /**
-     * æŠ½å–å‡ºæ¥çš„æ–¹æ³•æŒ‡ä»¤ã€‚
+     * ³éÈ¡³öÀ´µÄ·½·¨Ö¸Áî¡£
      */
     unsigned short* insts;
 
     /**
-     * æ–¹æ³•çš„try...catchå—ã€‚
+     * ·½·¨µÄtry...catch¿é¡£
      */
     //public List<TryBlock> tryBlocks;
 
     /**
-     * æ–¹æ³•çš„debugä¿¡æ¯ã€‚
+     * ·½·¨µÄdebugĞÅÏ¢¡£
      */
     //public List<DebugItem> debugItems;
 
@@ -138,18 +138,18 @@ typedef struct _SeparatorData {
 class YcFormat {
 public:
     /**
-     * æ–‡ä»¶å¤´ã€‚
+     * ÎÄ¼şÍ·¡£
      */
     YcHeader header;
 
     /**
-     * è¿™æ˜¯ä¸€ä¸ªæŒ‡é’ˆæ•°ç»„ã€‚
+     * ÕâÊÇÒ»¸öÖ¸ÕëÊı×é¡£
      */
     AdvmpMethod** methods;
 
     /**
-     * æŠ½ç¦»å™¨æ•°æ®ã€‚
-     * è¿™æ˜¯ä¸€ä¸ªæŒ‡é’ˆæ•°ç»„ã€‚
+     * ³éÀëÆ÷Êı¾İ¡£
+     * ÕâÊÇÒ»¸öÖ¸ÕëÊı×é¡£
      */
     SeparatorData** separatorDatas;
 
@@ -167,32 +167,32 @@ public:
     ~YcFile();
 
     /**
-     * è§£æYcæ–‡ä»¶ã€‚
-     * @return trueï¼šè§£ææˆåŠŸã€‚falseï¼šè§£æå¤±è´¥ã€‚
+     * ½âÎöYcÎÄ¼ş¡£
+     * @return true£º½âÎö³É¹¦¡£false£º½âÎöÊ§°Ü¡£
      */
     //bool parse();
 
     /**
-     * è§£æYcæ–‡ä»¶ã€‚
-     * @param[in] ycData ycæ–‡ä»¶æ•°æ®ã€‚
-     * @param[in] dataSize æ•°æ®é•¿åº¦ã€‚
-     * @return trueï¼šè§£ææˆåŠŸã€‚falseï¼šè§£æå¤±è´¥ã€‚
+     * ½âÎöYcÎÄ¼ş¡£
+     * @param[in] ycData ycÎÄ¼şÊı¾İ¡£
+     * @param[in] dataSize Êı¾İ³¤¶È¡£
+     * @return true£º½âÎö³É¹¦¡£false£º½âÎöÊ§°Ü¡£
      */
     bool parse(unsigned char* ycData, size_t dataSize);
 
     /**
-     * è§£æå†…å­˜ä¸­çš„Ycæ–‡ä»¶ã€‚
-     * @param[in] ä¿å­˜åœ¨å†…å­˜ä¸­çš„Ycæ–‡ä»¶æ•°æ®ã€‚
-     * @return trueï¼šè§£ææˆåŠŸã€‚falseï¼šè§£æå¤±è´¥ã€‚
+     * ½âÎöÄÚ´æÖĞµÄYcÎÄ¼ş¡£
+     * @param[in] ±£´æÔÚÄÚ´æÖĞµÄYcÎÄ¼şÊı¾İ¡£
+     * @return true£º½âÎö³É¹¦¡£false£º½âÎöÊ§°Ü¡£
      */
     bool parse(unsigned char* bytes);
 
     YcFormat mYcFormat;
 
     /**
-     * è·å¾—Separatoræ•°æ®ã€‚
-     * @param[in] index SeparatorDataæ•°ç»„ä¸­çš„ç´¢å¼•ã€‚
-     * @return è¿”å›Separatoræ•°æ®ã€‚
+     * »ñµÃSeparatorÊı¾İ¡£
+     * @param[in] index SeparatorDataÊı×éÖĞµÄË÷Òı¡£
+     * @return ·µ»ØSeparatorÊı¾İ¡£
      */
     const SeparatorData* GetSeparatorData(int index);
 
@@ -201,16 +201,16 @@ private:
 };
 
 /**
- * é‡Šæ”¾Ycæ–‡ä»¶ã€‚
- * @param[in] filePath zipæ–‡ä»¶è·¯å¾„ã€‚
- * @param[out] buffer Ycæ–‡ä»¶çš„æ•°æ®ã€‚
- * @return æˆåŠŸï¼šè¿”å›Ycæ–‡ä»¶çš„é•¿åº¦ã€‚å¤±è´¥ã€‚è¿”å›0ã€‚
- * @note bufferç”¨å®Œåéœ€è¦ç”¨freeå‡½æ•°é‡Šæ”¾å†…å­˜ã€‚
+ * ÊÍ·ÅYcÎÄ¼ş¡£
+ * @param[in] filePath zipÎÄ¼şÂ·¾¶¡£
+ * @param[out] buffer YcÎÄ¼şµÄÊı¾İ¡£
+ * @return ³É¹¦£º·µ»ØYcÎÄ¼şµÄ³¤¶È¡£Ê§°Ü¡£·µ»Ø0¡£
+ * @note bufferÓÃÍêºóĞèÒªÓÃfreeº¯ÊıÊÍ·ÅÄÚ´æ¡£
  */
 uLong ReleaseYcFile(const char* zipPath, unsigned char** buffer);
 
 /**
- * æ‰“å¼€å¹¶è§£æycæ–‡ä»¶ã€‚
- * @return trueï¼šæˆåŠŸã€‚falseï¼šå¤±è´¥ã€‚
+ * ´ò¿ª²¢½âÎöycÎÄ¼ş¡£
+ * @return true£º³É¹¦¡£false£ºÊ§°Ü¡£
  */
 //bool OpenAndParseYc();

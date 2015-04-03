@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "Common.h"
 #include "InterpC.h"
 #include "Globals.h"
@@ -16,10 +16,8 @@ jint separatorTest(JNIEnv* env, jobject thiz, jint value) {
     return result.i;
 }
 
-// TODO 现在只支持一个类，但是其实可以支持多个类。
-
 /**
- * 注册本地方法。
+ * ע�᱾�ط�����
  */
 bool registerNatives(JNIEnv* env) {
     const char* classDesc = "buwai/android/shell/advmptest/MainActivity";
@@ -30,7 +28,7 @@ bool registerNatives(JNIEnv* env) {
 
     jclass clazz = env->FindClass(classDesc);
     if (!clazz) {
-        MY_LOG_ERROR("未找到类：%s！", classDesc);
+        MY_LOG_ERROR("not find class��%s��", classDesc);
         return false;
     }
 
@@ -38,7 +36,7 @@ bool registerNatives(JNIEnv* env) {
     if ( JNI_OK == env->RegisterNatives(clazz, methods, array_size(methods)) ) {
         bRet = true;
     } else {
-        MY_LOG_ERROR("注册类\"%s\"的本地方法失败！", classDesc);
+        MY_LOG_ERROR("register class:%s.register native method fail.", classDesc);
     }
     env->DeleteLocalRef(clazz);
     return bRet;
@@ -46,7 +44,7 @@ bool registerNatives(JNIEnv* env) {
 
 void registerFunctions(JNIEnv* env) {
     if (!registerNatives(env)) {
-        MY_LOG_ERROR("注册本地方法失败。");
+        MY_LOG_ERROR("registerFunctions fail��");
         return;
     }
 }
@@ -64,24 +62,24 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
         return JNI_ERR;
     }
 
-    // 注册本地方法。
+    // ע�᱾�ط�����
     registerFunctions(env);
 
-    // 获得apk路径。
+    // ���apk·����
     gAdvmp.apkPath = GetAppPath(env);
-    MY_LOG_INFO("apk路径：%s", gAdvmp.apkPath);
+    MY_LOG_INFO("apk path��%s", gAdvmp.apkPath);
 
-    // 释放yc文件。
+    // �ͷ�yc�ļ���
     gAdvmp.ycSize = ReleaseYcFile(gAdvmp.apkPath, &gAdvmp.ycData);
     if (0 == gAdvmp.ycSize) {
-        MY_LOG_WARNING("释放Yc文件失败！");
+        MY_LOG_WARNING("release Yc file fail!");
         goto _ret;
     }
 
-    // 解析yc文件。
+    // ����yc�ļ���
     gAdvmp.ycFile = new YcFile;
     if (!gAdvmp.ycFile->parse(gAdvmp.ycData, gAdvmp.ycSize)) {
-        MY_LOG_WARNING("解析Yc文件失败。");
+        MY_LOG_WARNING("parse Yc file fail.");
         goto _ret;
     }
 

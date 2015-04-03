@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 #include "unzip.h"
 
@@ -8,50 +8,50 @@ public:
     ~FileReader();
 
     /**
-     * æ‰“å¼€æ–‡ä»¶ã€‚
-     * @param[in] filePath æ–‡ä»¶è·¯å¾„ã€‚
+     * ´ò¿ªÎÄ¼ş¡£
+     * @param[in] filePath ÎÄ¼şÂ·¾¶¡£
      */
     bool Open(const char* filePath);
 
     /**
-     * ç§»åŠ¨æ–‡ä»¶æŒ‡é’ˆåˆ°æŒ‡å®šåç§»ä½ç½®ã€‚
-     * @param[in] offset è·ç¦»æ–‡ä»¶èµ·å§‹ä½ç½®çš„åç§»ã€‚
-     * @return trueï¼šæˆåŠŸã€‚falseï¼šå¤±è´¥ã€‚
+     * ÒÆ¶¯ÎÄ¼şÖ¸Õëµ½Ö¸¶¨Æ«ÒÆÎ»ÖÃ¡£
+     * @param[in] offset ¾àÀëÎÄ¼şÆğÊ¼Î»ÖÃµÄÆ«ÒÆ¡£
+     * @return true£º³É¹¦¡£false£ºÊ§°Ü¡£
      */
     bool Seek(unsigned int offset);
 
     /**
-     * å…³é—­æ‰“å¼€çš„æ–‡ä»¶ã€‚
+     * ¹Ø±Õ´ò¿ªµÄÎÄ¼ş¡£
      */
     void Close();
 
     /**
-     * è¯»å–ä¸€ä¸ªæ— ç¬¦å·shortå€¼ã€‚
-     * @param[out] value è¯»å–æˆåŠŸåˆ™è¿”å›è¯»å–åˆ°çš„å€¼ã€‚
-     * @return trueï¼šè¯»å–æˆåŠŸã€‚falseï¼šè¯»å–å¤±è´¥ã€‚
+     * ¶ÁÈ¡Ò»¸öÎŞ·ûºÅshortÖµ¡£
+     * @param[out] value ¶ÁÈ¡³É¹¦Ôò·µ»Ø¶ÁÈ¡µ½µÄÖµ¡£
+     * @return true£º¶ÁÈ¡³É¹¦¡£false£º¶ÁÈ¡Ê§°Ü¡£
      */
     bool ReadUShort(unsigned short* value);
 
     /**
-     * è¯»å–ä¸€ä¸ªæ— ç¬¦å·æ•´å‹å€¼ã€‚
-     * @param[out] value è¯»å–æˆåŠŸåˆ™è¿”å›è¯»å–åˆ°çš„å€¼ã€‚
-     * @return trueï¼šè¯»å–æˆåŠŸã€‚falseï¼šè¯»å–å¤±è´¥ã€‚
+     * ¶ÁÈ¡Ò»¸öÎŞ·ûºÅÕûĞÍÖµ¡£
+     * @param[out] value ¶ÁÈ¡³É¹¦Ôò·µ»Ø¶ÁÈ¡µ½µÄÖµ¡£
+     * @return true£º¶ÁÈ¡³É¹¦¡£false£º¶ÁÈ¡Ê§°Ü¡£
      */
     bool ReadUInt(unsigned int* value);
 
     /**
-     * è¯»å–å­—èŠ‚æ•°ç»„ã€‚
-     * @param[out] buffer å¦‚æœæˆåŠŸï¼Œåˆ™è¿”å›çš„å­—èŠ‚æ•°ç»„ã€‚
-     * @param[in] count è¯»å–çš„å­—èŠ‚æ•°ã€‚
-     * @return trueï¼šè¯»å–æˆåŠŸã€‚falseï¼šè¯»å–å¤±è´¥ã€‚
+     * ¶ÁÈ¡×Ö½ÚÊı×é¡£
+     * @param[out] buffer Èç¹û³É¹¦£¬Ôò·µ»ØµÄ×Ö½ÚÊı×é¡£
+     * @param[in] count ¶ÁÈ¡µÄ×Ö½ÚÊı¡£
+     * @return true£º¶ÁÈ¡³É¹¦¡£false£º¶ÁÈ¡Ê§°Ü¡£
      */
     bool ReadBytes(unsigned char* buffer, int count);
 
     /**
-     * è¯»å–æ— ç¬¦å·shortæ•°ç»„ã€‚
-     * @param[out] buffer è¯»å–æˆåŠŸï¼Œåˆ™è¿”å›ä¸€ä¸ªshortæ•°ç»„ã€‚
-     * @param[in] size æ•°ç»„ä¸­å…ƒç´ ä¸ªæ•°ã€‚
-     * @return trueï¼šè¯»å–æˆåŠŸã€‚falseï¼šè¯»å–å¤±è´¥ã€‚
+     * ¶ÁÈ¡ÎŞ·ûºÅshortÊı×é¡£
+     * @param[out] buffer ¶ÁÈ¡³É¹¦£¬Ôò·µ»ØÒ»¸öshortÊı×é¡£
+     * @param[in] size Êı×éÖĞÔªËØ¸öÊı¡£
+     * @return true£º¶ÁÈ¡³É¹¦¡£false£º¶ÁÈ¡Ê§°Ü¡£
      */
     bool ReadUShorts(unsigned short* buffer, int size);
 
@@ -69,28 +69,28 @@ public:
     ~ZipReader();
 
     /**
-     * æ‰“å¼€zipæ–‡ä»¶ã€‚
+     * ´ò¿ªzipÎÄ¼ş¡£
      */
     bool Open();
 
     /**
-     * è·å¾—zipä¸­æŸä¸ªæ–‡ä»¶å¤§å°ã€‚
-     * @param[in] fileName åœ¨zipä¸­çš„æ–‡ä»¶è·¯å¾„ã€‚
-     * @return æˆåŠŸï¼Œè¿”å›æ–‡ä»¶å¤§å°ã€‚å¤±è´¥ï¼Œè¿”å›0ã€‚
+     * »ñµÃzipÖĞÄ³¸öÎÄ¼ş´óĞ¡¡£
+     * @param[in] fileName ÔÚzipÖĞµÄÎÄ¼şÂ·¾¶¡£
+     * @return ³É¹¦£¬·µ»ØÎÄ¼ş´óĞ¡¡£Ê§°Ü£¬·µ»Ø0¡£
      */
     uLong GetFileSizeInZip(const char *fileName);
 
     /**
-     * è¯»å–æŸä¸ªæ–‡ä»¶ã€‚
-     * @param[in] fileName åœ¨zipä¸­çš„æ–‡ä»¶è·¯å¾„ã€‚
-     * @param[out] è¯»å–åˆ°çš„æ•°æ®ã€‚
-     * @param[in] è¦è¯»å–çš„æ•°æ®é•¿åº¦ã€‚
-     * @return trueï¼šæˆåŠŸã€‚falseï¼šå¤±è´¥ã€‚
+     * ¶ÁÈ¡Ä³¸öÎÄ¼ş¡£
+     * @param[in] fileName ÔÚzipÖĞµÄÎÄ¼şÂ·¾¶¡£
+     * @param[out] ¶ÁÈ¡µ½µÄÊı¾İ¡£
+     * @param[in] Òª¶ÁÈ¡µÄÊı¾İ³¤¶È¡£
+     * @return true£º³É¹¦¡£false£ºÊ§°Ü¡£
      */
     bool ReadBytes(const char *fileName, unsigned char *buffer, size_t len);
 
     /**
-     * å…³é—­æ–‡ä»¶ã€‚
+     * ¹Ø±ÕÎÄ¼ş¡£
      */
     bool Close();
 

@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "log.h"
 #include "BitConvert.h"
 #include "io.h"
@@ -24,12 +24,12 @@ YcFile::~YcFile() {
     }
 }
 
-// è§£æYcæ–‡ä»¶ã€‚
+// ½âÎöYcÎÄ¼ş¡£
 // bool YcFile::parse() {
 //     FileReader fileReader;
 //     
 //     if (!fileReader.Open(mFilePath)) {
-//         MY_LOG_WARNING("æ‰“å¼€æ–‡ä»¶\"%s\"å¤±è´¥ã€‚errno:%d-%s.", mFilePath, errno, strerror(errno));
+//         MY_LOG_WARNING("´ò¿ªÎÄ¼ş\"%s\"Ê§°Ü¡£errno:%d-%s.", mFilePath, errno, strerror(errno));
 //         return false;
 //     }
 // 
@@ -40,10 +40,10 @@ YcFile::~YcFile() {
 //         return false;
 //     }
 // 
-//     // æ ¡éªŒé­”æœ¯å­—ã€‚
+//     // Ğ£ÑéÄ§Êõ×Ö¡£
 //     char* magic = ToString(buffer, 6);
 //     if (0 != strcmp(magic, MAGIC)) {
-//         MY_LOG_WARNING("é­”æœ¯å­—æ ¡éªŒå¤±è´¥ã€‚");
+//         MY_LOG_WARNING("Ä§Êõ×ÖĞ£ÑéÊ§°Ü¡£");
 //         delete[] buffer;
 //         free(magic);
 //         return false;
@@ -54,49 +54,49 @@ YcFile::~YcFile() {
 //     mYcFormat.header.magic = MAGIC;
 // 
 //     if (!fileReader.ReadUInt(&mYcFormat.header.methodSize)) {
-//         MY_LOG_WARNING("è¯»å–æ–¹æ³•ç»“æ„ä¸ªæ•°å¤±è´¥ã€‚");
+//         MY_LOG_WARNING("¶ÁÈ¡·½·¨½á¹¹¸öÊıÊ§°Ü¡£");
 //         return false;
 //     }
 // 
 //     if (!fileReader.ReadUInt(&mYcFormat.header.methodOffset)) {
-//         MY_LOG_WARNING("è¯»å–æ–¹æ³•æ®µåç§»å¤±è´¥ã€‚");
+//         MY_LOG_WARNING("¶ÁÈ¡·½·¨¶ÎÆ«ÒÆÊ§°Ü¡£");
 //         return false;
 //     }
 // 
 //     if (!fileReader.ReadUInt(&mYcFormat.header.separatorDataSize)) {
-//         MY_LOG_WARNING("è¯»å–æŠ½ç¦»æ•°ç»„sizeå¤±è´¥ã€‚");
+//         MY_LOG_WARNING("¶ÁÈ¡³éÀëÊı×ésizeÊ§°Ü¡£");
 //         return false;
 //     }
 // 
 //     if (!fileReader.ReadUInt(&mYcFormat.header.separatorDataOffset)) {
-//         MY_LOG_WARNING("è¯»å–æŠ½ç¦»æ•°æ®æ®µåç§»å¤±è´¥ã€‚");
+//         MY_LOG_WARNING("¶ÁÈ¡³éÀëÊı¾İ¶ÎÆ«ÒÆÊ§°Ü¡£");
 //         return false;
 //     }
 // 
-//     // TODO è¿™é‡Œå…ˆä¸è§£æAdvmpMethodçš„æ•°æ®ã€‚
+//     // TODO ÕâÀïÏÈ²»½âÎöAdvmpMethodµÄÊı¾İ¡£
 //     
 //     unsigned int separatorDataSize = mYcFormat.header.separatorDataSize;
-//     // è§£ææŠ½ç¦»æ•°æ®ã€‚
+//     // ½âÎö³éÀëÊı¾İ¡£
 //     if (0 != separatorDataSize) {
 //         mYcFormat.separatorDatas = new SeparatorData*[separatorDataSize];
 //         if (!fileReader.Seek(mYcFormat.header.separatorDataOffset)) {
-//             MY_LOG_WARNING("è®¾ç½®æ–‡ä»¶æŒ‡é’ˆä½ç½®å¤±è´¥ã€‚");
+//             MY_LOG_WARNING("ÉèÖÃÎÄ¼şÖ¸ÕëÎ»ÖÃÊ§°Ü¡£");
 //             return false;
 //         }
 // 
 //         for (int i = 0; i < separatorDataSize; i++) {
 //             mYcFormat.separatorDatas[i] = (SeparatorData*) calloc(1, sizeof(SeparatorData));
 //             if (!fileReader.ReadUInt(&mYcFormat.separatorDatas[i]->methodIndex)) {
-//                 MY_LOG_WARNING("%d. è¯»å–SeparatorDataä¸­æ–¹æ³•ç´¢å¼•å¤±è´¥ã€‚", i);
+//                 MY_LOG_WARNING("%d. ¶ÁÈ¡SeparatorDataÖĞ·½·¨Ë÷ÒıÊ§°Ü¡£", i);
 //                 return false;
 //             }
 //             if (!fileReader.ReadUInt(&mYcFormat.separatorDatas[i]->instSize)) {
-//                 MY_LOG_WARNING("%d. è¯»å–SeparatorDataä¸­æ–¹æ³•æŒ‡ä»¤sizeå¤±è´¥ã€‚", i);
+//                 MY_LOG_WARNING("%d. ¶ÁÈ¡SeparatorDataÖĞ·½·¨Ö¸ÁîsizeÊ§°Ü¡£", i);
 //                 return false;
 //             }
 //             mYcFormat.separatorDatas[i]->insts = new unsigned short[mYcFormat.separatorDatas[i]->instSize];
 //             if (!fileReader.ReadUShorts(mYcFormat.separatorDatas[i]->insts, mYcFormat.separatorDatas[i]->instSize)) {
-//                 MY_LOG_WARNING("%d. è¯»å–SeparatorDataä¸­æ–¹æ³•æŒ‡ä»¤sizeå¤±è´¥ã€‚", i);
+//                 MY_LOG_WARNING("%d. ¶ÁÈ¡SeparatorDataÖĞ·½·¨Ö¸ÁîsizeÊ§°Ü¡£", i);
 //                 return false;
 //             }
 //         }
@@ -105,15 +105,15 @@ YcFile::~YcFile() {
 //     return true;
 // }
 
-// è§£æYcæ–‡ä»¶ã€‚
+// ½âÎöYcÎÄ¼ş¡£
 bool YcFile::parse(unsigned char* ycData, size_t dataSize) {
     unsigned char* p = ycData;
     unsigned char* end = ycData + dataSize - 1;
 
-    // æ ¡éªŒé­”æœ¯å­—ã€‚
+    // Ğ£ÑéÄ§Êõ×Ö¡£
     char* magic = ToString(p, 6);
     if (0 != strcmp(magic, MAGIC)) {
-        MY_LOG_WARNING("é­”æœ¯å­—æ ¡éªŒå¤±è´¥ã€‚");
+        MY_LOG_WARNING("invalid magic");
         free(magic);
         return false;
     }
@@ -143,7 +143,7 @@ bool YcFile::parse(unsigned char* ycData, size_t dataSize) {
     MY_LOG_INFO("header.separatorDataOffset:%u", mYcFormat.header.separatorDataOffset);
     p += sizeof(mYcFormat.header.separatorDataOffset);
 
-    // TODO è¿™é‡Œå…ˆä¸è§£æAdvmpMethodçš„æ•°æ®ã€‚
+    // TODO ÕâÀïÏÈ²»½âÎöAdvmpMethodµÄÊı¾İ¡£
     unsigned int methodSize = mYcFormat.header.methodSize;
     if (0 != methodSize) {
         mYcFormat.methods = new AdvmpMethod*[methodSize];
@@ -151,7 +151,7 @@ bool YcFile::parse(unsigned char* ycData, size_t dataSize) {
     }
 
     unsigned int separatorDataSize = mYcFormat.header.separatorDataSize;
-    // è§£ææŠ½ç¦»æ•°æ®ã€‚
+    // ½âÎö³éÀëÊı¾İ¡£
     if (0 != separatorDataSize) {
         mYcFormat.separatorDatas = new SeparatorData*[separatorDataSize];
         p = ycData + mYcFormat.header.separatorDataOffset;
@@ -192,7 +192,7 @@ bool YcFile::parse(unsigned char* ycData, size_t dataSize) {
             MY_LOG_INFO("%d. instSize:%u", i, mYcFormat.separatorDatas[i]->instSize);
 
             size_t instByteSize = mYcFormat.separatorDatas[i]->instSize * sizeof(unsigned short);
-            MY_LOG_INFO("æŒ‡ä»¤å­—èŠ‚ä¸ªæ•°ï¼š%zd", instByteSize);
+            MY_LOG_INFO("instByteSize:%zd", instByteSize);
             mYcFormat.separatorDatas[i]->insts = new unsigned short[mYcFormat.separatorDatas[i]->instSize];
             memcpy(mYcFormat.separatorDatas[i]->insts, p, instByteSize);
             p += instByteSize;
@@ -204,7 +204,7 @@ bool YcFile::parse(unsigned char* ycData, size_t dataSize) {
     return true;
 }
 
-// è·å¾—Separatoræ•°æ®
+// »ñµÃSeparatorÊı¾İ
 const SeparatorData* YcFile::GetSeparatorData(int index) {
     return mYcFormat.separatorDatas[index];
 }
@@ -240,25 +240,25 @@ YcFormat::~YcFormat() {
 
 //////////////////////////////////////////////////////////////////////////
 
-// æ‰“å¼€å¹¶è§£æycæ–‡ä»¶ã€‚
+// ´ò¿ª²¢½âÎöycÎÄ¼ş¡£
 // bool OpenAndParseYc(JNIEnv* env) {
 //     YcFile* ycFile = new YcFile(gAdvmp.ycFilePath);
 //     if (ycFile->parse()) {
 //         gAdvmp.ycFile = ycFile;
 //     } else {
-//         MY_LOG_ERROR("æ‰“å¼€&è§£æycæ–‡ä»¶å¤±è´¥ï¼");
+//         MY_LOG_ERROR("´ò¿ª&½âÎöycÎÄ¼şÊ§°Ü£¡");
 //         return false;
 //     }
 // }
 
 //////////////////////////////////////////////////////////////////////////
 
-// é‡Šæ”¾Ycæ–‡ä»¶ã€‚
+// ÊÍ·ÅYcÎÄ¼ş¡£
 uLong ReleaseYcFile(const char* zipPath, unsigned char** buffer) {
-    MY_LOG_INFO("zipæ–‡ä»¶ï¼š%s", zipPath);
+    MY_LOG_INFO("zip file:%s", zipPath);
     ZipReader zipReader(zipPath);
     if (!zipReader.Open()) {
-        MY_LOG_WARNING("æ‰“å¼€zipæ–‡ä»¶å¤±è´¥ï¼š%s", zipPath);
+        MY_LOG_WARNING("open zip file fail%s", zipPath);
         return false;
     }
 
@@ -269,15 +269,15 @@ uLong ReleaseYcFile(const char* zipPath, unsigned char** buffer) {
 
     uLong bRet = 0;
     if (0 == fileSize) {
-        MY_LOG_WARNING("è·å¾—çš„ycæ–‡ä»¶é•¿åº¦ä¸º0ã€‚");
+        MY_LOG_WARNING("yc file size is 0.");
         goto _ret;
     }
 
-    MY_LOG_INFO("ycæ–‡ä»¶å¤§å°ï¼š%lu", fileSize);
+    MY_LOG_INFO("yc file size:%lu", fileSize);
     
     *buffer = (unsigned char*) calloc(sizeof(unsigned char), fileSize);
     if (!zipReader.ReadBytes(filePathInZip, *buffer, fileSize)) {
-        MY_LOG_WARNING("è¯»å–Ycæ–‡ä»¶å¤±è´¥ã€‚");
+        MY_LOG_WARNING("read yc file fail.");
         goto _ret;
     }
 

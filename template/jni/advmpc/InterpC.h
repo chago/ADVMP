@@ -1,14 +1,14 @@
-ï»¿#pragma once
+#pragma once
 
 #include <jni.h>
 #include "YcFile.h"
 
 /**
- * å­—èŠ‚ç è§£é‡Šå™¨ã€‚
- * @param[in] Separator æ•°æ®ã€‚
- * @param[in] env JNIç¯å¢ƒã€‚
- * @param[in] thiz å½“å‰å¯¹è±¡ã€‚
- * @param[in] ... å¯å˜å‚æ•°ï¼Œä¼ å…¥è°ƒç”¨Javaæ–¹æ³•çš„å‚æ•°ã€‚
+ * ×Ö½ÚÂë½âÊÍÆ÷¡£
+ * @param[in] Separator Êı¾İ¡£
+ * @param[in] env JNI»·¾³¡£
+ * @param[in] thiz µ±Ç°¶ÔÏó¡£
+ * @param[in] ... ¿É±ä²ÎÊı£¬´«Èëµ÷ÓÃJava·½·¨µÄ²ÎÊı¡£
  * @return 
  */
 jvalue BWdvmInterpretPortable(const SeparatorData* separatorData, JNIEnv* env, jobject thiz, ...);

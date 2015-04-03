@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 /*
  * There are three types of objects:

@@ -90,7 +90,9 @@ public class ControlCentre {
             Utils.copyFolder(mOpt.libDir.getAbsolutePath(), mApkUnpackDir.getAbsolutePath() + File.separator + "lib");
 
             // 打包。
-            File outApkFile = new File(mOpt.outDir, mOpt.apkFile.getName() + ".shelled.apk");
+            String name = mOpt.apkFile.getName();
+            name = name.substring(0, name.lastIndexOf('.'));
+            File outApkFile = new File(mOpt.outDir, name + ".shelled.apk");
             ZipHelper.doZip(mApkUnpackDir.getAbsolutePath(), outApkFile.getAbsolutePath());
 
             bRet = true;
@@ -127,7 +129,8 @@ public class ControlCentre {
      */
     private void copyJniFiles() throws IOException {
         // TODO 这里写死了。
-        File jniTemplateDir = new File("E:\\MyProjects\\ADVMP\\template\\jni");
+        //File jniTemplateDir = new File("E:\\MyProjects\\ADVMP\\template\\jni");
+        File jniTemplateDir = new File(System.getProperty("user.dir") + File.separator + "template" + File.separator + "jni");
         mOpt.jniDir = new File(mOpt.workspace, "jni");
         Utils.copyFolder(jniTemplateDir.getAbsolutePath(), mOpt.jniDir.getAbsolutePath());
     }

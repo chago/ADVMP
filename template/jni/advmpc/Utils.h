@@ -1,9 +1,9 @@
-ï»¿#pragma once
+#pragma once
 
 /**
- * èŽ·å¾—APPæ–‡ä»¶è·¯å¾„ã€‚
- * @param[in] env JNIçŽ¯å¢ƒã€‚
- * @return è¿”å›žAPPæ–‡ä»¶è·¯å¾„ã€‚è¿™ä¸ªè·¯å¾„ä½¿ç”¨å®ŒåŽéœ€è¦é€šè¿‡freeå‡½æ•°é‡Šæ”¾å†…å­˜ã€‚
- * @note TODO è¿™ä¸ªå‡½æ•°ä¸­ä½¿ç”¨äº†åå°„èŽ·å¾—APPæ–‡ä»¶çš„è·¯å¾„ï¼Œåº”è¯¥æ˜¯æœ‰å…¼å®¹æ€§é—®é¢˜çš„ã€‚
+ * »ñµÃAPPÎÄ¼þÂ·¾¶¡£
+ * @param[in] env JNI»·¾³¡£
+ * @return ·µ»ØAPPÎÄ¼þÂ·¾¶¡£Õâ¸öÂ·¾¶Ê¹ÓÃÍêºóÐèÒªÍ¨¹ýfreeº¯ÊýÊÍ·ÅÄÚ´æ¡£
+ * @note TODO Õâ¸öº¯ÊýÖÐÊ¹ÓÃÁË·´Éä»ñµÃAPPÎÄ¼þµÄÂ·¾¶£¬Ó¦¸ÃÊÇÓÐ¼æÈÝÐÔÎÊÌâµÄ¡£
  */
 char* GetAppPath(JNIEnv* env);

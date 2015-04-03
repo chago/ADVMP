@@ -1,10 +1,10 @@
-ï»¿#pragma once
+#pragma once
 
 #include <jni.h>
 #include "YcFile.h"
 #include "unzip.h"
 
-// TODO è¿™é‡Œæ˜¯è°ƒè¯•æ ‡å¿—ã€‚
+// TODO ÕâÀïÊÇµ÷ÊÔ±êÖ¾¡£
 #define _AVMP_DEBUG_
 
 extern const char* gYcFileName;
@@ -13,11 +13,11 @@ typedef struct _ADVMPGlobals {
     char* apkPath;
 
     /**
-     * ä¿å­˜ycæ–‡ä»¶çš„å†…å®¹ã€‚
+     * ±£´æycÎÄ¼şµÄÄÚÈİ¡£
      */
     unsigned char* ycData;
     /**
-     * ycæ–‡ä»¶å¤§å¤§å°ã€‚
+     * ycÎÄ¼ş´ó´óĞ¡¡£
      */
     uLong ycSize;
 
