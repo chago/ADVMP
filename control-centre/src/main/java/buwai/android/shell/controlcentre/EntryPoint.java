@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 /**
  * Created by buwai on 2015/4/1.
@@ -48,10 +47,6 @@ public class EntryPoint {
             if (null == opt.outDir) {
                 usage();
             }
-
-            // 创建工作目录。
-            opt.workspace = Files.createTempDirectory(opt.outDir.toPath(), "advmp").toFile();
-            log.info("workspack:" + opt.workspace);
 
             ControlCentre controlCentre = new ControlCentre(opt);
             log.info("开始加固。");

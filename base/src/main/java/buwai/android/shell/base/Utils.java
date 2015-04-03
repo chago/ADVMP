@@ -8,6 +8,19 @@ import java.io.*;
 public class Utils {
 
     /**
+     * 是否是Windows操作系统。
+     * @return true：是Windows操作系统。false：不是Windows操作系统。
+     */
+    public static boolean isWindowsOS() {
+        String os = System.getProperty("os.name");
+        if(os.toLowerCase().startsWith("win")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 复制整个文件夹内容
      *
      * @param oldPath String 原文件路径 如：c:/fqf

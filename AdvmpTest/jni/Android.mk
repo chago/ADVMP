@@ -4,7 +4,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := advmpc
+LOCAL_MODULE    := advmp
 
 LOCAL_C_INCLUDES := $(ADVMPC_PATH)
 

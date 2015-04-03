@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := advmpc
+LOCAL_MODULE    := advmp
 
 LOCAL_SRC_FILES := ioapi.c \
 				   unzip.c \

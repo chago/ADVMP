@@ -53,8 +53,7 @@ void registerFunctions(JNIEnv* env) {
 
 #else
 
-//+${gClassDesc}
-//+${gMethods}
+//+${replaceAll}
 
 #endif
 

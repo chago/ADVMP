@@ -13,7 +13,9 @@ import org.jf.dexlib2.dexbacked.DexBackedMethod;
 import org.jf.dexlib2.iface.ClassDef;
 import org.jf.dexlib2.iface.DexFile;
 import org.jf.dexlib2.iface.Method;
+import org.jf.dexlib2.iface.MethodParameter;
 import org.jf.dexlib2.immutable.ImmutableMethod;
+import org.jf.dexlib2.immutable.ImmutableMethodParameter;
 import org.jf.dexlib2.rewriter.*;
 
 import javax.annotation.Nonnull;
@@ -148,8 +150,15 @@ public class Separator {
                         separatorData.size = 4 + 4 + 4 + 4 + 4 + separatorData.paramShortDesc.size + 4 + (separatorData.instSize * 2) + 4;
                         mSeparatorData.add(separatorData);
 
+                        // 下面这么做的目的是要把方法的name删除，否则生成的dex安装的时候会有这个错误：INSTALL_FAILED_DEXOPT。
+                        List<? extends MethodParameter> oldParams = value.getParameters();
+                        List<ImmutableMethodParameter> newParams = new ArrayList<>();
+                        for (MethodParameter mp : oldParams) {
+                            newParams.add(new ImmutableMethodParameter(mp.getType(), mp.getAnnotations(), null));
+                        }
+
                         // 生成一个新的方法。
-                        return new ImmutableMethod(value.getDefiningClass(), value.getName(), value.getParameters(), value.getReturnType(), value.getAccessFlags() | AccessFlags.NATIVE.getValue(), value.getAnnotations(), null);
+                        return new ImmutableMethod(value.getDefiningClass(), value.getName(), newParams, value.getReturnType(), value.getAccessFlags() | AccessFlags.NATIVE.getValue(), value.getAnnotations(), null);
                     }
 
                     return super.rewrite(value);

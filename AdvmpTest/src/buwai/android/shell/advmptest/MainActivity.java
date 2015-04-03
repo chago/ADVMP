@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 	private native static void nativeLog();
 	
 	static {
-		System.loadLibrary("advmpc");
+		System.loadLibrary("advmp");
 	}
 	
 }

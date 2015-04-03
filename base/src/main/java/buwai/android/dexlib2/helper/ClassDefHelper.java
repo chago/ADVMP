@@ -23,6 +23,7 @@ public class ClassDefHelper {
      */
     public static boolean isMethodExist(ClassDef classDef, Method method) {
         for (Method m : classDef.getMethods()) {
+            // 判断类名、方法名。
             if (m.getDefiningClass().equals(method.getDefiningClass()) &&
                 m.getName().equals(method.getName()) &&
                 m.getReturnType().equals(method.getReturnType()) &&
@@ -38,7 +39,7 @@ public class ClassDefHelper {
                 return bRet;
             }
         }
-        return true;
+        return false;
     }
 
     /**

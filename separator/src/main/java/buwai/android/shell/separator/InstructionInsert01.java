@@ -11,7 +11,9 @@ import org.jf.dexlib2.Opcode;
 import org.jf.dexlib2.iface.*;
 import org.jf.dexlib2.iface.instruction.Instruction;
 import org.jf.dexlib2.immutable.ImmutableMethod;
+import org.jf.dexlib2.immutable.ImmutableMethodImplementation;
 import org.jf.dexlib2.immutable.ImmutableMethodParameter;
+import org.jf.dexlib2.immutable.instruction.ImmutableInstruction10x;
 import org.jf.dexlib2.immutable.instruction.ImmutableInstruction21c;
 import org.jf.dexlib2.immutable.instruction.ImmutableInstruction35c;
 import org.jf.dexlib2.immutable.instruction.ImmutableInstruction3rc;
@@ -98,9 +100,31 @@ public class InstructionInsert01 {
         return MethodHelper.insertInstructionInStart(method, newInsts, 1);
     }
 
+    /**
+     * 创建<clinit>方法。
+     * @param classDef
+     * @return
+     */
     private Method createClinit(ClassDef classDef) {
-       // ImmutableMethod newMethod = new ImmutableMethod(classDef.getType(), )
-        return null;
+        List<Instruction> newInsts = new ArrayList<>();
+        ImmutableStringReference str = new ImmutableStringReference(Common.SO_NAME);
+        // const-string vX, SO_NAME
+        ImmutableInstruction21c i0 = new ImmutableInstruction21c(Opcode.CONST_STRING, 0, str);
+        newInsts.add(i0);
+
+        List<MethodParameter> params = new ArrayList<>();
+        params.add(new ImmutableMethodParameter("Ljava/lang/String;", null, null));
+        ImmutableMethod m = new ImmutableMethod("Ljava/lang/System;", "loadLibrary", params, "V", AccessFlags.PUBLIC.getValue(), null, null);
+
+        ImmutableInstruction35c i1 = new ImmutableInstruction35c(Opcode.INVOKE_STATIC, 1, 0, 0, 0, 0, 0, m);
+        newInsts.add(i1);
+
+        ImmutableInstruction10x i2 = new ImmutableInstruction10x(Opcode.RETURN_VOID);
+        newInsts.add(i2);
+
+        ImmutableMethodImplementation newmi = new ImmutableMethodImplementation(1, newInsts, null, null);
+
+        return new ImmutableMethod(classDef.getType(), "<clinit>", null, "V", AccessFlags.STATIC.getValue() | AccessFlags.CONSTRUCTOR.getValue(), null, newmi);
     }
 
 }

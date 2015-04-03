@@ -14,7 +14,7 @@ public class ZipHelper {
      * 解压缩zip文件中的单个文件。
      *
      * @param file     file zip文件。
-     * @param outPath   输出路径。
+     * @param outPath  输出路径。
      * @param filename 要解压缩的文件名。
      */
     public static void unZipSingle(File file, File outPath, String filename) throws IOException {
@@ -39,6 +39,46 @@ public class ZipHelper {
             while ((temp = input.read()) != -1) {
                 zipOut.write(temp);
             }
+        }
+    }
+
+    /**
+     * 压缩一个文件或文件夹到zip文件。
+     * @param inputFilePath
+     * @param zipPath
+     * @throws Exception
+     */
+    public static void doZip(String inputFilePath, String zipPath) throws Exception {
+        doZip(zipPath, new File(inputFilePath));
+    }
+
+    private static void doZip(String zipPath, File inputFile) throws Exception {
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipPath));
+        doZip(out, inputFile, "");
+        out.close();
+    }
+
+    private static void doZip(ZipOutputStream out, File inputFile, String base) throws Exception {
+
+        byte[] buffer = new byte[1024];
+
+        if (inputFile.isDirectory()) {
+            File[] fl = inputFile.listFiles();
+            if (base.length() > 0) {
+                out.putNextEntry(new ZipEntry(base + "/"));
+            }
+            base = base.length() == 0 ? "" : base + "/";
+            for (int i = 0; i < fl.length; i++) {
+                doZip(out, fl[i], base + fl[i].getName());
+            }
+        } else {
+            out.putNextEntry(new ZipEntry(base));
+            FileInputStream in = new FileInputStream(inputFile);
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                out.write(buffer, 0, len);
+            }
+            in.close();
         }
     }
 

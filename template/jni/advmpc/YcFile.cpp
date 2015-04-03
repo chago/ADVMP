@@ -273,7 +273,7 @@ uLong ReleaseYcFile(const char* zipPath, unsigned char** buffer) {
         goto _ret;
     }
 
-    MY_LOG_INFO("yc文件大小：%ul", fileSize);
+    MY_LOG_INFO("yc文件大小：%lu", fileSize);
     
     *buffer = (unsigned char*) calloc(sizeof(unsigned char), fileSize);
     if (!zipReader.ReadBytes(filePathInZip, *buffer, fileSize)) {
