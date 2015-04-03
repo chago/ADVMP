@@ -32,108 +32,6 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-/*
- * Extract instruction byte from 16-bit fetch (_inst is a u2).
- */
-#define INST_INST(_inst)    ((_inst) & 0xff)
-
-/*
- * Replace the opcode (used when handling breakpoints).  _opcode is a u1.
- */
-#define INST_REPLACE_OP(_inst, _opcode) (((_inst) & 0xff00) | _opcode)
-
-/*
- * Extract the "vA, vB" 4-bit registers from the instruction word (_inst is u2).
- */
-#define INST_A(_inst)       (((_inst) >> 8) & 0x0f)
-#define INST_B(_inst)       ((_inst) >> 12)
-
-/*
- * Get the 8-bit "vAA" 8-bit register index from the instruction word.
- * (_inst is u2)
- */
-#define INST_AA(_inst)      ((_inst) >> 8)
-
-/*
- * Export another copy of the PC on every instruction; this is largely
- * redundant with EXPORT_PC and the debugger code.  This value can be
- * compared against what we have stored on the stack with EXPORT_PC to
- * help ensure that we aren't missing any export calls.
- */
-#if WITH_EXTRA_GC_CHECKS > 1
-# define EXPORT_EXTRA_PC() (self->currentPc2 = pc)
-#else
-# define EXPORT_EXTRA_PC()
-#endif
-
-/*
- * Adjust the program counter.  "_offset" is a signed int, in 16-bit units.
- *
- * Assumes the existence of "const u2* pc" and "const u2* curMethod->insns".
- *
- * We don't advance the program counter until we finish an instruction or
- * branch, because we do want to have to unroll the PC if there's an
- * exception.
- */
-#ifdef CHECK_BRANCH_OFFSETS
-# define ADJUST_PC(_offset) do {                                            \
-        int myoff = _offset;        /* deref only once */                   \
-        if (pc + myoff < curMethod->insns ||                                \
-            pc + myoff >= curMethod->insns + dvmGetMethodInsnsSize(curMethod)) \
-        {                                                                   \
-            char* desc;                                                     \
-            desc = dexProtoCopyMethodDescriptor(&curMethod->prototype);     \
-            ALOGE("Invalid branch %d at 0x%04x in %s.%s %s",                 \
-                myoff, (int) (pc - curMethod->insns),                       \
-                curMethod->clazz->descriptor, curMethod->name, desc);       \
-            free(desc);                                                     \
-            dvmAbort();                                                     \
-        }                                                                   \
-        pc += myoff;                                                        \
-        EXPORT_EXTRA_PC();                                                  \
-    } while (false)
-#else
-# define ADJUST_PC(_offset) do {                                            \
-        pc += _offset;                                                      \
-        EXPORT_EXTRA_PC();                                                  \
-    } while (false)
-#endif
-
-/*
- * Get 16 bits from the specified offset of the program counter.  We always
- * want to load 16 bits at a time from the instruction stream -- it's more
- * efficient than 8 and won't have the alignment problems that 32 might.
- *
- * Assumes existence of "const u2* pc".
- */
-#define FETCH(_offset)     (pc[(_offset)])
-
-/*
- * Instruction framing.  For a switch-oriented implementation this is
- * case/break, for a threaded implementation it's a goto label and an
- * instruction fetch/computed goto.
- *
- * Assumes the existence of "const u2* pc" and (for threaded operation)
- * "u2 inst".
- */
-# define H(_op)             &&op_##_op
-# define HANDLE_OPCODE(_op) op_##_op:
-# define FINISH(_offset) {                                                  \
-        ADJUST_PC(_offset);                                                 \
-        inst = FETCH(0);                                                    \
-        /*if (self->interpBreak.ctl.subMode) {*/                                \
-            /*dvmCheckBefore(pc, fp, self);*/                                   \
-        /*}*/                                                                   \
-        goto *handlerTable[INST_INST(inst)];                                \
-    }
-# define FINISH_BKPT(_opcode) {                                             \
-        goto *handlerTable[_opcode];                                        \
-    }
-
-#define OP_END
-
-//////////////////////////////////////////////////////////////////////////
-
 enum AccessFlags {
     /** public member / class */
     ACC_PUBLIC = 0x0001,
@@ -251,7 +149,7 @@ enum AccessFlags {
  * can find the next instruction" aren't possible. (This is
  * correctable, but probably not useful.)
  */
-enum BWOpcode {
+enum Opcode {
     // BEGIN(libdex-opcode-enum); GENERATED AUTOMATICALLY BY opcode-gen
     OP_NOP                          = 0x00,
     OP_MOVE                         = 0x01,
@@ -779,17 +677,17 @@ enum BWOpcode {
     };
 
 /*
- * Return the BWOpcode for a given raw opcode code unit (which may
+ * Return the Opcode for a given raw opcode code unit (which may
  * include data payload). The packed index is a zero-based index which
  * can be used to point into various opcode-related tables. The Dalvik
  * opcode space is inherently sparse, in that the opcode unit is 16
  * bits wide, but for most opcodes, eight of those bits are for data.
  */
-/* DEX_INLINE */ BWOpcode dexOpcodeFromCodeUnit(u2 codeUnit);
+/* DEX_INLINE */ Opcode dexOpcodeFromCodeUnit(u2 codeUnit);
 
 /*
  * Return the name of an opcode.
  */
-const char* dexGetOpcodeName(BWOpcode op);
+const char* dexGetOpcodeName(Opcode op);
 
 #endif  // LIBDEX_DEXOPCODES_H_

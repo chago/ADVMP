@@ -289,7 +289,7 @@ static const char* gOpNames[kNumPackedOpcodes] = {
     // END(libdex-opcode-names)
 };
 
-BWOpcode dexOpcodeFromCodeUnit(u2 codeUnit) {
+Opcode dexOpcodeFromCodeUnit(u2 codeUnit) {
     /*
      * This will want to become table-driven should the opcode layout
      * get more complicated.
@@ -299,16 +299,16 @@ BWOpcode dexOpcodeFromCodeUnit(u2 codeUnit) {
      */
     int lowByte = codeUnit & 0xff;
     if (lowByte != 0xff) {
-        return (BWOpcode) lowByte;
+        return (Opcode) lowByte;
     } else {
-        return (BWOpcode) ((codeUnit >> 8) | 0x100);
+        return (Opcode) ((codeUnit >> 8) | 0x100);
     }
 }
 
 /*
  * Return the name of an opcode.
  */
-const char* dexGetOpcodeName(BWOpcode op)
+const char* dexGetOpcodeName(Opcode op)
 {
     assert(op >= 0 && op < kNumPackedOpcodes);
     return gOpNames[op];

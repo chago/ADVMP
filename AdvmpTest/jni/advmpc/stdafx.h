@@ -8,4 +8,9 @@
 #include <errno.h>
 #include <stdarg.h>
 
+#include "Common.h"
+
+#include "Object.h"
+#include "Exception.h"
+
 #include "log.h"
