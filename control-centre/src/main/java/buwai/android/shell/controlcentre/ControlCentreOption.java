@@ -13,11 +13,6 @@ public class ControlCentreOption {
     public File apkFile;
 
     /**
-     * 输出的apk文件。
-     */
-    public File outApkFile;
-
-    /**
      * 加固后apk的输出目录。
      */
     public File outDir;

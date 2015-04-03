@@ -42,6 +42,7 @@ public class Separator {
     public Separator(SeparatorOption opt) throws IOException {
         mOpt = opt;
         mDexFile = DexFileFactory.loadDexFile(opt.dexFile, Common.API); // 加载dex。
+
         mDexRewriter = new SeparatorDexRewriter(new SeparatorRewriterModule());
 
         // 解析配置文件。

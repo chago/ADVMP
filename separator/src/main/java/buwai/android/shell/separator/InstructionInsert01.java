@@ -38,6 +38,7 @@ public class InstructionInsert01 {
 
     public InstructionInsert01(File dexFile, final TypeDescription classDesc) throws IOException {
         mSrc = dexFile;
+
         mDexFile = DexFileFactory.loadDexFile(dexFile, Common.API); // 加载dex。
         mClassDesc = classDesc;
     }

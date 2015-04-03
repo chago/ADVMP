@@ -3,6 +3,7 @@ package buwai.android.shell.base;
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -44,6 +45,7 @@ public class ZipHelper {
 
     /**
      * 压缩一个文件或文件夹到zip文件。
+     *
      * @param inputFilePath
      * @param zipPath
      * @throws Exception
@@ -53,9 +55,9 @@ public class ZipHelper {
     }
 
     private static void doZip(String zipPath, File inputFile) throws Exception {
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipPath));
-        doZip(out, inputFile, "");
-        out.close();
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipPath))) {
+            doZip(out, inputFile, "");
+        }
     }
 
     private static void doZip(ZipOutputStream out, File inputFile, String base) throws Exception {
@@ -73,12 +75,80 @@ public class ZipHelper {
             }
         } else {
             out.putNextEntry(new ZipEntry(base));
-            FileInputStream in = new FileInputStream(inputFile);
-            int len;
-            while ((len = in.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
+            try (FileInputStream in = new FileInputStream(inputFile)) {
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, len);
+                }
             }
-            in.close();
+        }
+    }
+
+    /**
+     * Unzip it
+     *
+     * @param zipFile      input zip file
+     * @param outputFolder zip file output folder
+     */
+    public static void unZip(String zipFile, String outputFolder) {
+
+        byte[] buffer = new byte[1024];
+        ZipInputStream zis = null;
+
+        // create output directory is not exists
+        File folder = new File(outputFolder);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        try {
+
+
+            // get the zip file content
+            zis = new ZipInputStream(new FileInputStream(zipFile));
+            // get the zipped file list entry
+            ZipEntry ze = zis.getNextEntry();
+
+            while (ze != null) {
+
+                String fileName = ze.getName();
+                File newFile = new File(outputFolder + File.separator + fileName);
+
+                if (ze.isDirectory()) {
+                    ze = zis.getNextEntry();
+                    continue;
+                }
+                // create all non exists folders
+                // else you will hit FileNotFoundException for compressed folder
+                new File(newFile.getParent()).mkdirs();
+
+                try (FileOutputStream fos = new FileOutputStream(newFile)) {
+
+                    int len;
+                    while ((len = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+
+                    fos.close();
+                }
+                ze = zis.getNextEntry();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (null != zis) {
+                try {
+                    zis.closeEntry();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                try {
+                    zis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

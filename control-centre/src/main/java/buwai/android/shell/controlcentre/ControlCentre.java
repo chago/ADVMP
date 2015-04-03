@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 /**
  * Created by Neptunian on 2015/4/1.
@@ -40,11 +39,10 @@ public class ControlCentre {
         mApkUnpackDir = new File(mOpt.workspace, "apk");
         mApkUnpackDir.mkdir();
 
-        // 解压缩apk中的classes.dex文件。
-        ZipHelper.unZipSingle(mOpt.apkFile, new File(mApkUnpackDir, "classes.dex"), "classes.dex");
+        // 将整个apk文件解压。
+        ZipHelper.unZip(mOpt.apkFile.getAbsolutePath(), mApkUnpackDir.getAbsolutePath());
 
-        // 解压缩apk中的AndroidManifest.xml文件。
-        ZipHelper.unZipSingle(mOpt.apkFile, new File(mApkUnpackDir, "AndroidManifest.xml"), "AndroidManifest.xml");
+//        Files.copy(new File("E:\\Test\\AndroidHelloWorld", "classes.dex").toPath(), new File(mApkUnpackDir, "classes.dex").toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -55,6 +53,7 @@ public class ControlCentre {
     public boolean shell() {
         boolean bRet = false;
         try {
+            //Files.move(new File("E:\\Test\\AndroidHelloWorld", "classes.dex").toPath(), new File(mApkUnpackDir, "classes.dex").toPath(), StandardCopyOption.REPLACE_EXISTING);
             // 插入指令。
             TypeDescription classDesc = AndroidManifestHelper.findFirstClass(new File(mApkUnpackDir, "AndroidManifest.xml"));
             InstructionInsert01 instructionInsert01 = new InstructionInsert01(new File(mApkUnpackDir, "classes.dex"), classDesc);
@@ -76,18 +75,23 @@ public class ControlCentre {
             mOpt.libDir = new File(mOpt.jniDir.getParentFile(), "lib");
             new File(mOpt.jniDir.getParentFile(), "libs").renameTo(mOpt.libDir);
 
-            // 拷贝apk。
-            mOpt.outApkFile = new File(mOpt.outDir, mOpt.apkFile.getName() + ".shelled.apk");
-            Files.copy(mOpt.apkFile.toPath(), mOpt.outApkFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-            File assetsDir = new File(mOpt.workspace, "assets");
-            assetsDir.mkdir();
+            // 移动yc文件。
+            File assetsDir = new File(mApkUnpackDir, "assets");
+            if (!assetsDir.exists()) {
+                assetsDir.mkdir();
+            }
             File newYcFile = new File(assetsDir, "classes.yc");
             Files.move(mOpt.outYcFile.toPath(), newYcFile.toPath());
 
-            // 将文件更新到apk中。
-            ZipHelper.doZip(mOpt.libDir.getAbsolutePath(), mOpt.outApkFile.getAbsolutePath());  // lib
-            ZipHelper.doZip(newYcFile.getAbsolutePath(), mOpt.outApkFile.getAbsolutePath());    // assets
+            // 移动classes.dex文件。
+            //Files.copy(new File(mOpt.outYcFile.getParent(), "classes.dex").toPath(), new File(mApkUnpackDir, "classes.dex").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Utils.copyFile(new File(mOpt.outYcFile.getParent(), "classes.dex").getAbsolutePath(), new File(mApkUnpackDir, "classes.dex").getAbsolutePath());
+            // 拷贝lib目录。
+            Utils.copyFolder(mOpt.libDir.getAbsolutePath(), mApkUnpackDir.getAbsolutePath() + File.separator + "lib");
+
+            // 打包。
+            File outApkFile = new File(mOpt.outDir, mOpt.apkFile.getName() + ".shelled.apk");
+            ZipHelper.doZip(mApkUnpackDir.getAbsolutePath(), outApkFile.getAbsolutePath());
 
             bRet = true;
         } catch (IOException e) {
