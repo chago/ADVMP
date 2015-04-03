@@ -32,6 +32,8 @@ public class YcFile {
         mFormat.header = new YcFormat.Header();
         mFormat.header.magic = YcFormat.MAGIC;
 
+        mFormat.header.size = YcFormat.SIZE_HEADER;
+
         List<YcFormat.AdvmpMethod> ycformat_methods = mFormat.methods;
         if (null == ycformat_methods || 0 == ycformat_methods.size()) {
             mFormat.header.methodSize = 0;
@@ -73,6 +75,7 @@ public class YcFile {
         byte[] xxx = Ints.toByteArray(10);
 
         os.write(header.magic.getBytes());
+        os.write(BitConverter.getBytes(header.size));
         os.write(BitConverter.getBytes(header.methodSize));
         os.write(BitConverter.getBytes(header.methodOffset));
         os.write(BitConverter.getBytes(header.separatorDataSize));
@@ -95,6 +98,7 @@ public class YcFile {
         if (null != methods) {
             for (YcFormat.AdvmpMethod m : methods) {
                 os.write(BitConverter.getBytes(m.methodIndex));
+                os.write(BitConverter.getBytes(m.size));
                 os.write(m.definingClass.getBytes());
                 os.write(m.name.getBytes());
                 os.write(m.sig.getBytes());
@@ -117,6 +121,7 @@ public class YcFile {
         List<YcFormat.SeparatorData> separatorDatas = mFormat.separatorDatas;
         for (YcFormat.SeparatorData s : separatorDatas) {
             os.write(BitConverter.getBytes(s.methodIndex));
+            os.write(BitConverter.getBytes(s.size));
             os.write(BitConverter.getBytes(s.instSize));
             os.write(BitConverter.getBytes(s.insts));
             // TODO ycformat 这里先不处理try...catch和调试信息。

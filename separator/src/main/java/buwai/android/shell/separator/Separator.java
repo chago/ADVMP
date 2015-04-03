@@ -131,6 +131,7 @@ public class Separator {
                         separatorData.methodIndex = mSeparatorData.size();
                         separatorData.insts = MethodHelper.getInstructions((DexBackedMethod) value);
                         separatorData.instSize = separatorData.insts.length;
+                        separatorData.size = 4 + 4 + separatorData.instSize + 4;
                         mSeparatorData.add(separatorData);
 
                         // 生成一个新的方法。

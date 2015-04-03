@@ -9,7 +9,7 @@ public class YcFormat {
 
     public static final String MAGIC = "YC0000";
 
-    public static final int SIZE_HEADER = MAGIC.length() + 4 + 4 + 4 + 4;
+    public static final int SIZE_HEADER = MAGIC.length() + 4 + 4 + 4 + 4 + 4;
 
     /**
      * 文件头。
@@ -32,6 +32,11 @@ public class YcFormat {
          * 魔术字。
          */
         public String magic;
+
+        /**
+         * 文件头大小。
+         */
+        public int size;
 
         /**
          * Method结构的个数。
@@ -68,6 +73,11 @@ public class YcFormat {
         public int methodIndex;
 
         /**
+         * 当前结构的大小。
+         */
+        public int size;
+
+        /**
          * 方法所属类。
          * 以"Ljava/lang/System;"这样的格式保存。
          */
@@ -94,6 +104,11 @@ public class YcFormat {
          * SeparatorData结构数组中的索引。
          */
         public int methodIndex;
+
+        /**
+         * 当前结构的大小。
+         */
+        public int size;
 
         /**
          * 指令数组元素个数。

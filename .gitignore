@@ -20,9 +20,16 @@ $RECYCLE.BIN/
 # IntelliJ IDEA
 *.iml
 
-#Maven
+# Maven
 target
 target/*
+
+# current project
+AdvmpTest/obj
+AdvmpTest/libs
+AdvmpTest/bin
+AdvmpTest/bin/project.properties
+AdvmpTest/bin/proguard-project.txt
 
 # =========================
 # Operating System Files
